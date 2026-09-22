@@ -8,14 +8,24 @@ a SubSync review:
 | Commercial Summary Schedule (`.xlsx`) | `src/commercial-summary.mjs` | `samples/Ridgeline Facades…Commercial Summary Schedule.xlsx` |
 | Drafted departures email (HTML + text + `.eml`) | `src/departures-email.mjs` | `samples/departures-email.eml` |
 
-Both read their brand from a JSON file in `brand/`, so the same code produces
-each account's own logo and colours.
+Both take their colours from the account's **Settings → Company Details →
+Brand colours** — the `brand_light` and `brand_dark` columns on
+`public.organisations`. The generators never hard-code a palette for a tenant;
+they derive one from those two stored colours (see [Brand colours](#brand-colours)).
 
 ```bash
 npm install
+npm test                  # palette derivation against every stored colour pairing
 npm run build:samples     # writes samples/ from src/sample-data.mjs
 npm run preview           # email with the logo inlined, for opening in a browser
 BRAND=brand/acme.json npm run build:samples
+```
+
+From the pipeline, pass the organisation row straight in:
+
+```js
+import { brandFromOrganisation } from './src/brand.mjs';
+const brand = brandFromOrganisation(orgRow, { logo, contact });   // orgRow = { name, brand_light, brand_dark }
 ```
 
 Previews: [`samples/preview/schedule-page1.png`](samples/preview/schedule-page1.png),
@@ -73,16 +83,16 @@ are from the real pair.
 
 **Spreadsheet** — `samples/preview/schedule-page1.png`
 
-- Logo top right of the print area, with the brand rule closing the masthead
-  under it. The wordmark is dark charcoal, so the band stays white and the rule
-  carries the colour; a reversed logo is not needed.
-- Brand palette applied throughout: charcoal masthead rule and table header,
-  tinted label cells, soft grey borders, zebra banding as a conditional-format
-  rule (so it survives filtering and re-sorting).
+- Logo top right of the print area, with a brand-colour rule closing the
+  masthead under it. The band stays white so a dark wordmark always reads.
+- Company Details colours applied throughout: brand colour on the title,
+  masthead rule and table header; the secondary colour on label cells and zone
+  bands; greys tinted toward the brand hue; zebra banding as a
+  conditional-format rule (so it survives filtering and re-sorting).
 - **Two visual zones.** A band above the headers splits
-  `SUBCONTRACT POSITION AND PROPOSED DEPARTURES` (charcoal) from
-  `FOR BUILDER COMPLETION` (bronze), and the builder's two columns keep a bronze
-  header, a medium left border and a cream input fill.
+  `SUBCONTRACT POSITION AND PROPOSED DEPARTURES` (brand colour) from
+  `FOR BUILDER COMPLETION` (a neutral slate), and the builder's two columns keep
+  a slate header, a medium left border and a cream input fill.
 - `Builder Response` is a drop-down — Accepted / Accepted as amended / Rejected /
   Further discussion required — with conditional formatting per value, plus a
   `Builder Comments` column beside it.
@@ -130,12 +140,6 @@ are from the real pair.
 
 ## Decisions worth challenging
 
-- **Brand colours are derived from the logo, not from a brand guide.**
-  `vettex.com.au` is blocked from this sandbox, and the logo asset contains
-  exactly one colour: `#404040`. The palette is that charcoal plus a neutral
-  grey scale, a bronze accent (`#8A5A2B`) for the builder's zone, and four
-  desaturated status colours. If Vettex has documented hexes, they go in
-  `brand/vettex.json` and nothing else changes.
 - **No risk score, priority or internal note in either output.** SubSync holds
   them, and the current email explicitly promises they stay out of the
   builder-facing file. Useful for triage, wrong to hand the other side.
@@ -144,9 +148,51 @@ are from the real pair.
 - **Sheet protection without a password.** It stops accidental edits to the
   proposed wording; anyone determined can still unprotect it. A password would
   be hostile to the builder.
-- **Bronze accent.** It reads as a deliberate second colour against charcoal. If
-  it feels off-brand, set `accent`/`accentTint` in the brand file to the
-  charcoal pair and the builder's zone falls back to grey.
+- **The builder's zone is neutral, not a brand colour.** Each account has at
+  most two colours and the second is usually a grey or white, so there is
+  rarely a real brand accent to use. A slate derived from the brand hue works
+  against any tenant's colour — blue, orange or magenta — without inventing one.
+- **Brand colours are darkened, never replaced.** A stored colour too pale to
+  carry white header text (e.g. `#e06029` at 3.6:1) is stepped darker until it
+  clears 4.5:1. The hue stays the account's own.
+
+## Brand colours
+
+`src/brand.mjs` turns the two stored colours into the full palette.
+
+**Which colour is the brand.** The field names can't be relied on. Across the
+six accounts that have set colours, these are the distinct pairings:
+
+| `brand_light` | `brand_dark` | What was entered |
+| --- | --- | --- |
+| `#1f5fc4` | `#e6e6e6` | dark blue under "light", light grey under "dark" |
+| `#e06029` | `#ffffff` | orange, and white as the "dark" colour |
+| `#f686fe` | `#f21897` | pale pink and magenta — this one matches the labels |
+| `#8e8e8e` | `#40abef` | mid-grey under "light", the actual brand blue under "dark" |
+
+So the brand colour is whichever has more **chroma**, not whichever field it
+sits in; the other becomes the secondary. Sorting by lightness would have picked
+the grey over the blue in the last row.
+
+**What each colour drives.**
+
+| Token | From | Used for |
+| --- | --- | --- |
+| `brand` | brand colour, darkened only if white text fails 4.5:1 | title, masthead rule, table header, letter head |
+| `brandTint` | secondary colour, lightened only as far as label text needs; derived from the brand if the secondary is white | label cells, zone bands |
+| `ink`, `muted`, `rule` | greys carrying a trace of the brand hue | body text, secondary text, borders |
+| `accent` | neutral slate, set apart from the brand in hue or lightness | builder's zone |
+| `status*` | fixed | response colours — they carry meaning, so never tenant-coloured |
+
+**No colours set** (21 of 27 accounts today) falls back to a charcoal palette.
+
+`npm test` runs every stored pairing and the empty case through the contrast
+checks.
+
+**Worth fixing in the app.** "Light" and "dark" are being read as "first" and
+"second". Relabelling the fields *Primary brand colour* and *Secondary colour
+(optional)* would match how people actually fill them in; the generator already
+handles either order.
 
 ## Payload contract
 

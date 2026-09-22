@@ -6,7 +6,8 @@
   "description": "Branded generators for the SubSync subcontract review deliverables: the Commercial Summary Schedule (xlsx) and the drafted departures email.",
   "scripts": {
     "build:samples": "node scripts/build-samples.mjs",
-    "preview": "node scripts/render-previews.mjs"
+    "preview": "node scripts/render-previews.mjs",
+    "test": "node --test"
   },
   "dependencies": {
     "exceljs": "^4.4.0",
