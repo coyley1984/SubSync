@@ -9,9 +9,8 @@ a SubSync review:
 | Drafted departures email (HTML + text + `.eml`) | `src/departures-email.mjs` | `samples/departures-email.eml` |
 
 Both take their colours from the account's **Settings → Company Details →
-Brand colours** — the `brand_light` and `brand_dark` columns on
-`public.organisations`. The generators never hard-code a palette for a tenant;
-they derive one from those two stored colours (see [Brand colours](#brand-colours)).
+Brand colours**, using the same rules the app applies to its own notices,
+orders and variations (see [Brand colours](#brand-colours)).
 
 ```bash
 npm install
@@ -25,7 +24,7 @@ From the pipeline, pass the organisation row straight in:
 
 ```js
 import { brandFromOrganisation } from './src/brand.mjs';
-const brand = brandFromOrganisation(orgRow, { logo, contact });   // orgRow = { name, brand_light, brand_dark }
+const brand = brandFromOrganisation(orgRow, { logo, contact });   // orgRow = { name, brand_dark, brand_light }
 ```
 
 Previews: [`samples/preview/schedule-page1.png`](samples/preview/schedule-page1.png),
@@ -83,14 +82,15 @@ are from the real pair.
 
 **Spreadsheet** — `samples/preview/schedule-page1.png`
 
-- Logo top right of the print area, with a brand-colour rule closing the
+- Logo top right of the print area, with an accent-colour rule closing the
   masthead under it. The band stays white so a dark wordmark always reads.
-- Company Details colours applied throughout: brand colour on the title,
-  masthead rule and table header; the secondary colour on label cells and zone
-  bands; greys tinted toward the brand hue; zebra banding as a
-  conditional-format rule (so it survives filtering and re-sorting).
+- Company Details colours applied the way the app applies them: the header
+  panel colour on the table header row (white or near-black text, whichever the
+  app would use), the accent colour on the title, masthead rule and section
+  headings, and zebra banding as a conditional-format rule (so it survives
+  filtering and re-sorting).
 - **Two visual zones.** A band above the headers splits
-  `SUBCONTRACT POSITION AND PROPOSED DEPARTURES` (brand colour) from
+  `SUBCONTRACT POSITION AND PROPOSED DEPARTURES` (accent) from
   `FOR BUILDER COMPLETION` (a neutral slate), and the builder's two columns keep
   a slate header, a medium left border and a cream input fill.
 - `Builder Response` is a drop-down — Accepted / Accepted as amended / Rejected /
@@ -148,51 +148,47 @@ are from the real pair.
 - **Sheet protection without a password.** It stops accidental edits to the
   proposed wording; anyone determined can still unprotect it. A password would
   be hostile to the builder.
-- **The builder's zone is neutral, not a brand colour.** Each account has at
-  most two colours and the second is usually a grey or white, so there is
-  rarely a real brand accent to use. A slate derived from the brand hue works
-  against any tenant's colour — blue, orange or magenta — without inventing one.
-- **Brand colours are darkened, never replaced.** A stored colour too pale to
-  carry white header text (e.g. `#e06029` at 3.6:1) is stepped darker until it
-  clears 4.5:1. The hue stays the account's own.
+- **The builder's zone is neutral, not a brand colour.** Company Details holds
+  two colours and both are already spoken for, so the builder's columns take a
+  slate that sits apart from any panel — navy, grey, white or magenta.
+- **This repo sits alongside the app's own generator.** The production schedule
+  comes from `lib/documents/departure-schedule.ts` in `subsync-app`, which already
+  reads `brand_dark` for its header and prints the logo in the footer. The
+  layout here (response drop-downs, sign-off block, locked cells, logo top
+  right) is the reference for porting into that generator.
 
 ## Brand colours
 
-`src/brand.mjs` turns the two stored colours into the full palette.
+`src/brand.mjs` follows the app's rules in `subsync-app` `lib/branding.ts`
+exactly, so a schedule or letter from here matches every other document the
+app prints for the same account.
 
-**Which colour is the brand.** The field names can't be relied on. Across the
-six accounts that have set colours, these are the distinct pairings:
-
-| `brand_light` | `brand_dark` | What was entered |
+| Column | Label in Settings | Drives here |
 | --- | --- | --- |
-| `#1f5fc4` | `#e6e6e6` | dark blue under "light", light grey under "dark" |
-| `#e06029` | `#ffffff` | orange, and white as the "dark" colour |
-| `#f686fe` | `#f21897` | pale pink and magenta — this one matches the labels |
-| `#8e8e8e` | `#40abef` | mid-grey under "light", the actual brand blue under "dark" |
+| `brand_dark` | Header panel colour | table header row fill |
+| `brand_light` | Accent colour | title, masthead rule, section headings, accent borders, links |
 
-So the brand colour is whichever has more **chroma**, not whichever field it
-sits in; the other becomes the secondary. Sorting by lightness would have picked
-the grey over the blue in the last row.
+**Header text follows the app's rule.** White text when the panel clears
+4.5:1 against white; otherwise near-black `#1a1a1a`, letterhead style. A white
+or light-grey panel is a deliberate choice in the app (there is a *Use white*
+button), not a mistake to correct.
 
-**What each colour drives.**
+**Unset columns fall back to the app's defaults** — navy `#091747` panel and
+blue `#1f5fc4` accent — which is what 21 of 27 accounts get today.
+
+Derived tokens:
 
 | Token | From | Used for |
 | --- | --- | --- |
-| `brand` | brand colour, darkened only if white text fails 4.5:1 | title, masthead rule, table header, letter head |
-| `brandTint` | secondary colour, lightened only as far as label text needs; derived from the brand if the secondary is white | label cells, zone bands |
-| `ink`, `muted`, `rule` | greys carrying a trace of the brand hue | body text, secondary text, borders |
-| `accent` | neutral slate, set apart from the brand in hue or lightness | builder's zone |
+| `panel`, `onPanel`, `panelRule` | `brand_dark` and the app's 4.5:1 rule | table header row |
+| `accent` | `brand_light`, unchanged | title, rule, headings, borders |
+| `inkOnWhite` | the panel if dark, else `#1a1a1a` (the app's `inkOnWhite`) | item reference numbers |
+| `tint`, `tintSoft` | pale panel, or pale accent when the panel is white; lightened until label text reads | label cells, zone bands |
+| `builderZone` | neutral slate apart from the panel | builder's columns |
 | `status*` | fixed | response colours — they carry meaning, so never tenant-coloured |
 
-**No colours set** (21 of 27 accounts today) falls back to a charcoal palette.
-
-`npm test` runs every stored pairing and the empty case through the contrast
-checks.
-
-**Worth fixing in the app.** "Light" and "dark" are being read as "first" and
-"second". Relabelling the fields *Primary brand colour* and *Secondary colour
-(optional)* would match how people actually fill them in; the generator already
-handles either order.
+`npm test` runs every stored pairing and the empty case through the app's
+panel rule and the contrast checks.
 
 ## Payload contract
 

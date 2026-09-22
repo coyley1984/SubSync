@@ -32,12 +32,6 @@ export function contrast(a, b) {
   return (hi + 0.05) / (lo + 0.05);
 }
 
-/** max − min of the RGB channels: how much colour, independent of lightness. */
-export function chroma(hex) {
-  const { r, g, b } = toRgb(hex);
-  return Math.max(r, g, b) - Math.min(r, g, b);
-}
-
 export function mix(a, b, t) {
   const x = toRgb(a);
   const y = toRgb(b);

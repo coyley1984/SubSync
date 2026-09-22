@@ -2,13 +2,28 @@ import { readFileSync } from 'node:fs';
 import { resolve, dirname, isAbsolute } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
-  chroma, contrast, darken, ensureContrast, fromHsl, lighten, luminance, normaliseHex, toHsl,
+  contrast, darken, ensureContrast, fromHsl, lighten, luminance, normaliseHex, toHsl,
 } from './colour.mjs';
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
-/** Used when an organisation has not set brand colours (most have not). */
-const NEUTRAL_BRAND = '404040';
+/**
+ * The same rules the app applies to Company Details → Brand colours
+ * (subsync-app lib/branding.ts), so a schedule or letter from here matches the
+ * notices, orders and variations the app prints for the same account.
+ *
+ *   brand_dark  → "Header panel colour": table header rows. White text only
+ *                 when it clears 4.5:1 on white; otherwise the text flips to
+ *                 near-black, letterhead style (white is a legitimate choice).
+ *   brand_light → "Accent colour": titles, section headings, accent borders.
+ *
+ * Unset columns fall back to the app's shipped navy and blue.
+ */
+export const DEFAULT_PANEL = '091747';
+export const DEFAULT_ACCENT = '1F5FC4';
+const DARK_MIN_CONTRAST_VS_WHITE = 4.5;
+const INK = '1A1A1A';
+const SUBTEXT = '525252';
 
 /** Status colours carry meaning, so they never follow the tenant's brand. */
 const STATUS = {
@@ -19,76 +34,48 @@ const STATUS = {
 };
 
 const REQUIRED_PALETTE_KEYS = [
-  'ink', 'brand', 'brandDark', 'brandTint', 'brandTintSoft', 'muted',
-  'rule', 'ruleSoft', 'paper', 'band', 'inputField', 'accent', 'accentTint',
-  ...Object.keys(STATUS),
+  'panel', 'onPanel', 'panelRule', 'accent', 'inkOnWhite', 'tint', 'tintSoft',
+  'builderZone', 'builderZoneTint', 'ink', 'muted', 'rule', 'ruleSoft', 'paper',
+  'band', 'inputField', ...Object.keys(STATUS),
 ];
 
-/**
- * Which of the two stored colours is the brand colour.
- *
- * Company Details stores `brand_light` and `brand_dark`, but accounts fill
- * them in inconsistently — a dark blue under "light", white under "dark", a
- * mid-grey beside the actual brand blue. The field names can't be trusted, so
- * the colour with the most chroma is taken as the brand, and the other as its
- * secondary. When both are equally (un)saturated, the darker one wins because
- * it can carry white text.
- */
-export function pickBrandColours(first, second) {
-  const cols = [normaliseHex(first), normaliseHex(second)].filter(Boolean);
-  if (cols.length === 0) return { primary: null, secondary: null };
-  if (cols.length === 1) return { primary: cols[0], secondary: null };
-  const [a, b] = cols;
-  if (Math.abs(chroma(a) - chroma(b)) > 0.08) {
-    return chroma(a) > chroma(b) ? { primary: a, secondary: b } : { primary: b, secondary: a };
-  }
-  return luminance(a) <= luminance(b) ? { primary: a, secondary: b } : { primary: b, secondary: a };
-}
+export const isDarkPanel = (hex) => contrast(hex, 'FFFFFF') >= DARK_MIN_CONTRAST_VS_WHITE;
 
-/**
- * Two colours in, a full contrast-checked palette out.
- *   brand   — header fills and the masthead rule; darkened if needed so white
- *             text on it clears 4.5:1
- *   tint    — label cells and zone bands; the secondary colour when there is
- *             one, lightened only as far as needed for label text to read
- *   neutrals— greys carrying a trace of the brand hue so they sit with it
- *   accent  — the builder's zone: a neutral slate, far enough from the brand
- *             in hue or lightness that the two zones read as different
- */
-export function derivePalette({ primary, secondary } = {}) {
-  const base = normaliseHex(primary) ?? NEUTRAL_BRAND;
-  const brand = ensureContrast(base, 'FFFFFF', 4.5);
-  const { h, s, l } = toHsl(brand);
-  const neutral = (lightness, sat = Math.min(s, 0.12)) => fromHsl({ h, s: sat, l: lightness });
+export function derivePalette({ panel, accent } = {}) {
+  const pnl = normaliseHex(panel) ?? DEFAULT_PANEL;
+  const acc = normaliseHex(accent) ?? DEFAULT_ACCENT;
+  const dark = isDarkPanel(pnl);
 
-  const ink = ensureContrast(neutral(0.16), 'FFFFFF', 12);
-  const muted = ensureContrast(neutral(0.38), 'FFFFFF', 5.5);
+  // Label cells and zone bands: a pale version of the panel, or of the accent
+  // when the panel is white and has no colour to lend.
+  let tint;
+  if (dark) tint = lighten(pnl, 0.86);
+  else if (luminance(pnl) > 0.95) tint = lighten(acc, 0.9);
+  else tint = lighten(pnl, 0.5);
+  for (let i = 0; i < 20 && contrast(SUBTEXT, tint) < 4.8; i += 1) tint = lighten(tint, 0.1);
 
-  let brandTint = null;
-  const sec = normaliseHex(secondary);
-  if (sec && luminance(sec) < 0.95) {
-    brandTint = sec;
-    for (let i = 0; i < 30 && contrast(muted, brandTint) < 4.8; i += 1) brandTint = lighten(brandTint, 0.06);
-    if (luminance(brandTint) > 0.95) brandTint = null;   // lightened into the paper: no band left to see
-  }
-  brandTint ??= lighten(brand, 0.86);
-
-  const accent = ensureContrast(neutral(l < 0.3 ? 0.42 : 0.26, Math.min(s, 0.10)), 'FFFFFF', 4.5);
+  // The builder's columns: a neutral slate, apart from the panel in hue or
+  // lightness, so "ours" and "theirs" read as different zones on any brand.
+  const { h, s } = toHsl(acc);
+  const builderZone = ensureContrast(fromHsl({ h, s: Math.min(s, 0.10), l: 0.28 }), 'FFFFFF', 4.5);
 
   return {
-    ink,
-    brand,
-    brandDark: darken(brand, 0.22),
-    brandTint,
-    brandTintSoft: lighten(brandTint, 0.6),
-    muted,
-    rule: neutral(0.80),
-    ruleSoft: neutral(0.89),
+    panel: pnl,
+    onPanel: dark ? 'FFFFFF' : INK,
+    panelRule: dark ? darken(pnl, 0.22) : 'BDBDBD',
+    accent: acc,
+    inkOnWhite: dark ? pnl : INK,
+    tint,
+    tintSoft: lighten(tint, 0.55),
+    builderZone,
+    builderZoneTint: lighten(builderZone, 0.9),
+    ink: INK,
+    muted: SUBTEXT,
+    rule: 'CFCFCF',
+    ruleSoft: 'E3E3E3',
     paper: 'FFFFFF',
-    band: lighten(brandTint, 0.8),
+    band: 'FAFAFA',
     inputField: 'FFFBF0',
-    accent,
-    accentTint: lighten(accent, 0.9),
     ...STATUS,
   };
 }
@@ -99,14 +86,11 @@ export function derivePalette({ primary, secondary } = {}) {
  * contact details come from the caller.
  */
 export function brandFromOrganisation(org, { id, logo, fonts, contact } = {}) {
-  const colours = pickBrandColours(org?.brand_light, org?.brand_dark);
   return finalise({
     id: id ?? org?.id ?? 'organisation',
     name: org?.name ?? '',
     shortName: org?.name ?? '',
-    source: { brand_light: org?.brand_light ?? null, brand_dark: org?.brand_dark ?? null },
-    colours,
-    palette: derivePalette(colours),
+    palette: derivePalette({ panel: org?.brand_dark, accent: org?.brand_light }),
     logo: logo ?? { print: null, email: null, alt: org?.name ?? '', aspectRatio: null },
     fonts: fonts ?? DEFAULT_FONTS,
     contact: contact ?? {},
@@ -120,9 +104,8 @@ const DEFAULT_FONTS = {
 };
 
 /**
- * Brand file loader. A file either carries `organisation` (the two stored
- * Company Details colours, from which the palette is derived) or an explicit
- * `palette` — the latter only for SubSync's own product chrome.
+ * Brand file loader. A file carries `organisation` — the two stored Company
+ * Details colours — and the palette is derived from them.
  */
 export function loadBrand(idOrPath) {
   const path = idOrPath.endsWith('.json')
@@ -131,8 +114,8 @@ export function loadBrand(idOrPath) {
   const raw = JSON.parse(readFileSync(path, 'utf8'));
 
   if (raw.organisation) {
-    const colours = pickBrandColours(raw.organisation.brand_light, raw.organisation.brand_dark);
-    return finalise({ ...raw, fonts: raw.fonts ?? DEFAULT_FONTS, colours, palette: derivePalette(colours) });
+    const palette = derivePalette({ panel: raw.organisation.brand_dark, accent: raw.organisation.brand_light });
+    return finalise({ ...raw, fonts: raw.fonts ?? DEFAULT_FONTS, palette });
   }
   return finalise({ ...raw, fonts: raw.fonts ?? DEFAULT_FONTS });
 }
