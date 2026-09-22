@@ -1,0 +1,15 @@
+{
+  "name": "subsync-review-outputs",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Branded generators for the SubSync subcontract review deliverables: the Commercial Summary Schedule (xlsx) and the drafted departures email.",
+  "scripts": {
+    "build:samples": "node scripts/build-samples.mjs",
+    "preview": "node scripts/render-previews.mjs"
+  },
+  "dependencies": {
+    "exceljs": "^4.4.0",
+    "jszip": "^3.10.1"
+  }
+}
