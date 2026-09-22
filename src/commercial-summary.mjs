@@ -43,7 +43,7 @@ export async function buildCommercialSummary(review, brand, outPath) {
   wb.keywords = `${review.document.reference}, Revision ${review.document.revision}`;
 
   const ws = wb.addWorksheet('Commercial Summary', {
-    properties: { tabColor: { argb: argb(p.brand) }, defaultRowHeight: 15 },
+    properties: { tabColor: { argb: argb(p.accent) }, defaultRowHeight: 15 },
     pageSetup: {
       orientation: 'landscape',
       paperSize: 8, // A3 — an eight-column text schedule is unreadable shrunk onto A4.
@@ -96,7 +96,7 @@ export async function buildCommercialSummary(review, brand, outPath) {
 
   const labelStyle = {
     font: { name: font, size: 9, bold: true, color: { argb: argb(p.muted) } },
-    fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: argb(p.brandTintSoft) } },
+    fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: argb(p.tintSoft) } },
     alignment: { vertical: 'middle', indent: 1 },
     border: { bottom: { style: 'thin', color: { argb: argb(p.ruleSoft) } } },
   };
@@ -129,14 +129,14 @@ export async function buildCommercialSummary(review, brand, outPath) {
   ws.mergeCells(span(rZone, 'G', LAST));
   Object.assign(ws.getCell(`A${rZone}`), {
     value: 'SUBCONTRACT POSITION AND PROPOSED DEPARTURES',
-    font: { name: font, size: 9, bold: true, color: { argb: argb(p.brand) } },
-    fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: argb(p.brandTint) } },
+    font: { name: font, size: 9, bold: true, color: { argb: argb(p.accent) } },
+    fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: argb(p.tint) } },
     alignment: { vertical: 'middle', indent: 1 },
   });
   Object.assign(ws.getCell(`G${rZone}`), {
     value: 'FOR BUILDER COMPLETION',
-    font: { name: font, size: 9, bold: true, color: { argb: argb(p.accent) } },
-    fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: argb(p.accentTint) } },
+    font: { name: font, size: 9, bold: true, color: { argb: argb(p.builderZone) } },
+    fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: argb(p.builderZoneTint) } },
     alignment: { vertical: 'middle', horizontal: 'center' },
   });
 
@@ -146,10 +146,10 @@ export async function buildCommercialSummary(review, brand, outPath) {
   COLUMNS.forEach((c, i) => {
     const cell = ws.getRow(rHead).getCell(i + 1);
     cell.value = c.header;
-    cell.font = { name: font, size: 10, bold: true, color: { argb: 'FFFFFFFF' } };
-    cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: argb(c.builder ? p.accent : p.brand) } };
+    cell.font = { name: font, size: 10, bold: true, color: { argb: argb(c.builder ? 'FFFFFF' : p.onPanel) } };
+    cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: argb(c.builder ? p.builderZone : p.panel) } };
     cell.alignment = { vertical: 'middle', horizontal: c.builder || i < 2 ? 'center' : 'left', wrapText: true, indent: c.builder || i < 2 ? 0 : 1 };
-    cell.border = { bottom: { style: 'medium', color: { argb: argb(p.brandDark) } } };
+    cell.border = { bottom: { style: 'medium', color: { argb: argb(c.builder ? p.builderZone : p.panelRule) } } };
   });
 
   // ── Departure rows ─────────────────────────────────────────────────────
@@ -175,7 +175,7 @@ export async function buildCommercialSummary(review, brand, outPath) {
     });
 
     Object.assign(ws.getCell(`A${r}`), { value: d.ref }, body({
-      font: { name: font, size: 10, bold: true, color: { argb: argb(p.brand) } },
+      font: { name: font, size: 10, bold: true, color: { argb: argb(p.inkOnWhite) } },
       alignment: { vertical: 'top', horizontal: 'center' },
     }));
     Object.assign(ws.getCell(`B${r}`), { value: d.area }, body({
@@ -212,7 +212,7 @@ export async function buildCommercialSummary(review, brand, outPath) {
         border: {
           top: { style: 'thin', color: { argb: argb(p.ruleSoft) } },
           bottom: { style: 'thin', color: { argb: argb(p.ruleSoft) } },
-          left: { style: col === 'G' ? 'medium' : 'thin', color: { argb: argb(col === 'G' ? p.accent : p.ruleSoft) } },
+          left: { style: col === 'G' ? 'medium' : 'thin', color: { argb: argb(col === 'G' ? p.builderZone : p.ruleSoft) } },
           right: { style: 'thin', color: { argb: argb(p.ruleSoft) } },
         },
       }));
@@ -279,8 +279,8 @@ export async function buildCommercialSummary(review, brand, outPath) {
   ws.mergeCells(span(rSignBand));
   Object.assign(ws.getCell(`A${rSignBand}`), {
     value: 'BUILDER SIGN-OFF',
-    font: { name: font, size: 9, bold: true, color: { argb: argb(p.brand) } },
-    fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: argb(p.brandTint) } },
+    font: { name: font, size: 9, bold: true, color: { argb: argb(p.accent) } },
+    fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: argb(p.tint) } },
     alignment: { vertical: 'middle', indent: 1 },
   });
 
@@ -419,7 +419,7 @@ function addBrandBand(ws, wb, brand, row, { widths, title, subtitle, meta, title
   ws.mergeCells(`A${rTitle}:${titleSpanTo}${rTitle}`);
   Object.assign(ws.getCell(`A${rTitle}`), {
     value: title,
-    font: { name: font, size: 18, bold: true, color: { argb: argb(p.brand) } },
+    font: { name: font, size: 18, bold: true, color: { argb: argb(p.accent) } },
     alignment: { vertical: 'middle' },
   });
 
@@ -454,7 +454,7 @@ function addBrandBand(ws, wb, brand, row, { widths, title, subtitle, meta, title
   const rRule = row.next();
   ws.getRow(rRule).height = 6;
   ws.mergeCells(`A${rRule}:${lastCol}${rRule}`);
-  ws.getCell(`A${rRule}`).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: argb(p.brand) } };
+  ws.getCell(`A${rRule}`).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: argb(p.accent) } };
 
   ws.getRow(row.next()).height = 8;
   return row.current();
@@ -488,7 +488,7 @@ function addInstructionsSheet(wb, review, brand) {
     ws.mergeCells(`B${r}:C${r}`);
     Object.assign(ws.getCell(`B${r}`), {
       value: text,
-      font: { name: font, size, bold: true, color: { argb: argb(p.brand) } },
+      font: { name: font, size, bold: true, color: { argb: argb(p.accent) } },
       alignment: { vertical: 'middle' },
     });
     r += 1;

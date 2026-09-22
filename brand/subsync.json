@@ -2,41 +2,10 @@
   "id": "subsync",
   "name": "SubSync",
   "shortName": "SubSync",
+  "organisation": {
+    "brand_dark": "#091747",
+    "brand_light": "#1f5fc4"
+  },
   "logo": { "print": null, "email": null, "alt": "SubSync", "aspectRatio": null },
-  "palette": {
-    "ink": "13203A",
-    "brand": "091747",
-    "brandDark": "060F30",
-    "brandTint": "E7EAF3",
-    "brandTintSoft": "F5F7FC",
-    "muted": "5A6478",
-    "rule": "C6CDDD",
-    "ruleSoft": "E3E7EF",
-    "paper": "FFFFFF",
-    "band": "F8F9FC",
-    "inputField": "FFFBF0",
-    "accent": "1F5FBF",
-    "accentTint": "E8F0FB",
-    "statusAccepted": "2E6B4F",
-    "statusAcceptedTint": "E7F1EC",
-    "statusAmended": "8A5A2B",
-    "statusAmendedTint": "F7EFE3",
-    "statusRejected": "9B3535",
-    "statusRejectedTint": "F6E9E9",
-    "statusDiscuss": "3A5573",
-    "statusDiscussTint": "EAEEF4"
-  },
-  "fonts": {
-    "spreadsheet": "Calibri",
-    "spreadsheetFallback": "Arial",
-    "email": "'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
-  },
-  "contact": {
-    "entity": "SubSync",
-    "contactName": "",
-    "position": "",
-    "email": "",
-    "phone": "",
-    "website": "subsync.com.au"
-  }
+  "contact": { "entity": "SubSync", "website": "subsync.com.au" }
 }
