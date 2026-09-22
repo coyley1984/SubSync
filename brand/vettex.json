@@ -2,34 +2,15 @@
   "id": "vettex",
   "name": "Vettex Pty Ltd",
   "shortName": "Vettex",
+  "organisation": {
+    "brand_light": "#1f5fc4",
+    "brand_dark": "#e6e6e6"
+  },
   "logo": {
     "print": "assets/vettex-logo.png",
     "email": "assets/vettex-logo-email.png",
     "alt": "Vettex",
     "aspectRatio": 3.1
-  },
-  "palette": {
-    "ink": "2E2E2E",
-    "brand": "404040",
-    "brandDark": "2B2B2B",
-    "brandTint": "EDEDED",
-    "brandTintSoft": "F6F6F6",
-    "muted": "5A5A5A",
-    "rule": "C8C8C8",
-    "ruleSoft": "E2E2E2",
-    "paper": "FFFFFF",
-    "band": "FAFAFA",
-    "inputField": "FFFBF0",
-    "accent": "8A5A2B",
-    "accentTint": "F4EDE4",
-    "statusAccepted": "2E6B4F",
-    "statusAcceptedTint": "E7F1EC",
-    "statusAmended": "8A5A2B",
-    "statusAmendedTint": "F7EFE3",
-    "statusRejected": "9B3535",
-    "statusRejectedTint": "F6E9E9",
-    "statusDiscuss": "3A5573",
-    "statusDiscussTint": "EAEEF4"
   },
   "fonts": {
     "spreadsheet": "Calibri",
