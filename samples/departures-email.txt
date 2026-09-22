@@ -1,0 +1,42 @@
+SUBSYNC — DRAFT TO FORWARD
+
+Your departures email for Harrow Street is drafted below, covering 2 adopted departures.
+Read it over, then forward this email from your own address, deleting everything above the cut line.
+Northline never hears from SubSync.
+
+Subject to use: Proposed subcontract departures — Harrow Street — FC01 Facade Cladding Package
+Attached: Commercial Summary Schedule (.xlsx) — builder-ready, no internal notes.
+
+This wording is AI-generated and is not legal advice. Check it, and take advice from a
+qualified Australian lawyer where the position matters.
+
+----------- cut line — forward everything below -----------
+
+PROPOSED SUBCONTRACT DEPARTURES
+Harrow Street · VTX-HARROW-CSS-001 · Revision A · 18 September 2026
+
+Hi,
+
+Thanks for the subcontract for Harrow Street. We have reviewed it and there are 2 departures we would like to agree before execution. Our proposed positions are set out below for Northline Constructions (Vic) Pty Ltd's consideration, and the full schedule is attached for mark-up and return.
+
+Project:          Harrow Street — 42 Harrow Street, Brunswick East, Victoria 3057
+Package:          FC01 Facade Cladding Package
+Subcontract sum:  $240,000.00 excluding GST
+Departures:       2 — response requested by 25 September 2026
+
+1. Cl. 10.9 – Payment of Tax Invoice  [Item 80 · Body Clause]
+   Current position:  'The Tax Invoice is payable by Northline within the period specified in the Contract Particulars.' The Contract Particulars specify the Tax Invoice is payable on the last day of the calendar month following the month in which the Progress Claim is made.
+   Proposed position: Replace 'The Tax Invoice is payable by Northline within the period specified in the Contract Particulars.' with 'The Tax Invoice is payable by Northline within 30 days of receipt, consistent with the Trade Contractor's tendered payment terms.'
+   Basis of request:  Tender qualification: '30 days from invoice.'
+
+2. Schedule 1 Item 28 – Liquidated Damages  [Item 213 · Annexure/Schedule]
+   Current position:  (a) $5,000 per day for failure to achieve Works Completion; and (b) an additional $5,000 per day for delay to Head Contract Practical Completion. No aggregate cap.
+   Proposed position: Replace '(a) $5,000 per day; or (b) $5,000 per day.' with '(a) $120 per day (being 5% of the Contract Price pro-rated over 100 days); and (b) Nil. Total LDs payable under this Trade Contract shall not exceed $12,000 (5% of the Contract Price). Liquidated damages are the sole and exclusive remedy of Northline for delay in achieving Works Completion.'
+   Basis of request:  Tender qualification: 'Will not accept liquidated damages above 5% of subcontract sum'.
+
+The attached schedule sets each item out in full with a response column, so it can be marked up and returned in one pass. Happy to walk through any of them on a call — these are about allocating risk where it can actually be managed.
+
+Kind regards,
+Chris Coyle
+Director, Vettex Pty Ltd
+chris@vettex.com.au
