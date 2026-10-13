@@ -1,0 +1,8 @@
+{
+  "id": "ember",
+  "name": "Ember Demolition Pty Ltd",
+  "shortName": "Ember Demolition",
+  "organisation": { "brand_dark": "#ffffff", "brand_light": "#e06029" },
+  "logo": { "print": null, "email": null, "alt": "Ember Demolition", "aspectRatio": null },
+  "contact": {}
+}

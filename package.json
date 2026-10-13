@@ -7,10 +7,14 @@
   "scripts": {
     "build:samples": "node scripts/build-samples.mjs",
     "preview": "node scripts/render-previews.mjs",
-    "test": "node --test"
+    "test": "node --test",
+    "build:pack": "node scripts/build-pack.mjs"
   },
   "dependencies": {
     "exceljs": "^4.4.0",
     "jszip": "^3.10.1"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.56.1"
   }
 }

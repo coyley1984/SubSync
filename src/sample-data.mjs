@@ -75,3 +75,67 @@ export const sampleReview = {
     },
   ],
 };
+
+/**
+ * Pre-Commencement Pack payload.
+ *
+ * pack = {
+ *   document:   { reference, revision, preparedOn, status },
+ *   project:    { name, address },
+ *   preparedFor: { name },
+ *   preparedBy:  { entity },
+ *   commercial:  { contractSum, gstTreatment },
+ *   claimBreakdown: [{ title, kind: 'contract' | 'provisional' | 'adjustment', items: [{ description, amount }] }],
+ *   team: [{ name, role, position, organisation, phone, email }]
+ * }
+ *
+ * `kind` is what lets the pack reconcile the schedule to the contract sum:
+ * contract works are expected to equal it, provisional sums and adjustments
+ * explain any difference. From the app's demo seed.
+ */
+export const samplePack = {
+  document: {
+    reference: 'VTX-COLLINS-PCP-001',
+    revision: 'A',
+    preparedOn: '2026-10-14',
+    status: 'Issued for commencement',
+  },
+  project: {
+    name: 'Collins St facade demolition',
+    address: '480 Collins Street, Melbourne VIC 3000',
+  },
+  preparedFor: { name: 'Meridian Built Pty Ltd' },
+  preparedBy: { entity: 'Vettex Pty Ltd' },
+  commercial: { contractSum: 1260000, gstTreatment: 'Excluding GST' },
+  claimBreakdown: [
+    {
+      title: 'Contract works',
+      kind: 'contract',
+      items: [
+        { description: 'Preliminaries and road occupancy', amount: 96000 },
+        { description: 'Scaffold, screens and public protection', amount: 178000 },
+        { description: 'Facade panel removal, levels 1–8', amount: 384000 },
+        { description: 'Structural take-down, podium', amount: 342000 },
+        { description: 'Spoil removal and disposal', amount: 156000 },
+        { description: 'Make good and handover', amount: 104000 },
+      ],
+    },
+    {
+      title: 'Provisional sums',
+      kind: 'provisional',
+      items: [{ description: 'Heritage stonework salvage', amount: 45000 }],
+    },
+    {
+      title: 'Adjustments',
+      kind: 'adjustment',
+      items: [{ description: 'Credit — builder-supplied hoarding', amount: -18000 }],
+    },
+  ],
+  team: [
+    { name: 'Grace Okonkwo', role: 'Project Manager', email: 'grace.okonkwo@demo-seed.subsync.com.au' },
+    { name: 'Chris Coyle', role: 'Director', phone: '0421 841 929', email: 'chris@vettex.com.au' },
+    { name: 'Anita Rahman', role: 'Contract Administrator', position: 'Contracts Administrator', email: 'anita.rahman@demo-seed.subsync.com.au' },
+    { name: 'Tom Whelan', role: 'Project Manager', position: 'Project Manager', email: 'tom.whelan@demo-seed.subsync.com.au' },
+    { name: 'Dean Kovac', role: 'Site Manager', position: 'Site Manager', email: 'dean.kovac@demo-seed.subsync.com.au' },
+  ],
+};
