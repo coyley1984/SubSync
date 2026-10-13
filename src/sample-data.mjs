@@ -86,8 +86,17 @@ export const sampleReview = {
  *   preparedBy:  { entity },
  *   commercial:  { contractSum, gstTreatment },
  *   claimBreakdown: [{ title, kind: 'contract' | 'provisional' | 'adjustment', items: [{ description, amount }] }],
- *   team: [{ name, role, position, organisation, phone, email }]
+ *   team: [{ name, role, position, organisation, phone, email }],
+ *   credentials: [{ name, role, items: [{ type, number, issuer, expires, file }] }],
+ *   insurances:  [{ cover, insurer, policyNumber, limit, expires, certificate }],
+ *   documents:   [{ category: 'SWMS' | 'Plan' | 'Licence' | other, title, reference,
+ *                   revision, date, scope, highRiskWork: [], file }]
  * }
+ *
+ * Every section is optional and appears only when the builder-facing pack
+ * includes it (the ticks on the pack screen). `file` / `certificate` is a PDF,
+ * PNG or JPG; when present it is bound in behind the pack as a lettered
+ * attachment, when absent the register shows "Not attached".
  *
  * `kind` is what lets the pack reconcile the schedule to the contract sum:
  * contract works are expected to equal it, provisional sums and adjustments
@@ -137,5 +146,57 @@ export const samplePack = {
     { name: 'Anita Rahman', role: 'Contract Administrator', position: 'Contracts Administrator', email: 'anita.rahman@demo-seed.subsync.com.au' },
     { name: 'Tom Whelan', role: 'Project Manager', position: 'Project Manager', email: 'tom.whelan@demo-seed.subsync.com.au' },
     { name: 'Dean Kovac', role: 'Site Manager', position: 'Site Manager', email: 'dean.kovac@demo-seed.subsync.com.au' },
+  ],
+  // Ticket numbers, policy numbers and attachments are fictional.
+  credentials: [
+    {
+      name: 'Dean Kovac',
+      role: 'Site Manager',
+      items: [
+        { type: 'Construction induction (white card)', number: 'CIC-0000001', issuer: 'WorkSafe Victoria' },
+        { type: 'High risk work licence — DG, RB, WP', number: 'HRW-0000000', issuer: 'WorkSafe Victoria', expires: '2026-11-02', file: 'samples/fixtures/ticket-dean-kovac-hrwl.png' },
+        { type: 'First aid (HLTAID011)', number: 'FA-24-0000', issuer: 'St John Ambulance Victoria', expires: '2027-08-15' },
+      ],
+    },
+    {
+      name: 'Tom Whelan',
+      role: 'Project Manager',
+      items: [
+        { type: 'Construction induction (white card)', number: 'CIC-0000002', issuer: 'WorkSafe Victoria' },
+        { type: 'Work safely at heights (RIIWHS204E)', number: 'WAH-23-0000', issuer: 'Registered training organisation', expires: '2026-09-30' },
+      ],
+    },
+    {
+      name: 'Grace Okonkwo',
+      role: 'Project Manager',
+      items: [
+        { type: 'Construction induction (white card)', number: 'CIC-0000003', issuer: 'WorkSafe Victoria' },
+        { type: 'Site induction — 480 Collins Street', issuer: 'Meridian Built', expires: '2027-10-14' },
+      ],
+    },
+  ],
+  insurances: [
+    { cover: 'Contract Works and Mobile Plant', insurer: 'QBE Insurance', policyNumber: 'CW-SAMPLE-01', limit: 2000000, expires: '2027-02-28' },
+    { cover: 'Motor Vehicle Fleet', insurer: 'Allianz Australia', policyNumber: 'MV-SAMPLE-02', expires: '2027-05-31' },
+    { cover: 'Professional Indemnity', insurer: 'Chubb Insurance', policyNumber: 'PI-SAMPLE-03', limit: 5000000, expires: '2027-04-30' },
+    { cover: 'Public and Products Liability', insurer: 'CGU Insurance', policyNumber: 'PL-SAMPLE-04', limit: 20000000, expires: '2027-03-31', certificate: 'samples/fixtures/certificate-public-liability.pdf' },
+    { cover: 'WorkCover (Victoria)', insurer: 'WorkSafe Victoria', policyNumber: 'WC-SAMPLE-05', expires: '2027-06-30' },
+  ],
+  documents: [
+    {
+      category: 'SWMS', title: 'Facade panel removal, levels 1–8', reference: 'SWMS-01', revision: 'B', date: '2026-10-06',
+      highRiskWork: ['Work at heights over 2 m', 'Work near a public road', 'Demolition of load-bearing elements'],
+      file: 'samples/fixtures/swms-01-facade-panel-removal.pdf',
+    },
+    {
+      category: 'SWMS', title: 'Structural take-down, podium', reference: 'SWMS-02', revision: 'A', date: '2026-10-06',
+      highRiskWork: ['Demolition of load-bearing elements', 'Work involving powered mobile plant'],
+      file: 'samples/fixtures/swms-02-podium-take-down.pdf',
+    },
+    {
+      category: 'Plan', title: 'Traffic management plan — Collins Street lane closure', reference: 'TMP-01', revision: 'C', date: '2026-09-29',
+      scope: 'Night works, lane 1 closed 7:00 pm–5:00 am', file: 'samples/fixtures/traffic-management-plan.pdf',
+    },
+    { category: 'Licence', title: 'Demolition and asbestos removal licence', reference: 'Class A', date: '2025-07-01' },
   ],
 };

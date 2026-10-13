@@ -97,6 +97,23 @@
   .team td a { color: #C05223; }
   .nowrap { white-space: nowrap; }
   .nil { color: #CFCFCF; }
+  .muted { color: #525252; font-size: 8.5pt; }
+  .strong { font-weight: 600; }
+  .sub { margin-top: 0.8mm; color: #525252; font-size: 8.5pt; }
+  .row-sub { font-weight: 400; color: #525252; margin-left: 3mm; }
+
+  .chip { display: inline-block; margin-top: 0.8mm; padding: 0.3mm 2mm; border-radius: 1mm; font-size: 7.5pt; font-weight: 600; white-space: nowrap; }
+  .chip.ok { color: #2E6B4F; background: #E7F1EC; }
+  .chip.warn { color: #8A5A2B; background: #F7EFE3; }
+  .chip.bad { color: #9B3535; background: #F6E9E9; }
+  .chip.none { color: #525252; background: #FAFAFA; }
+
+  .att { display: inline-block; min-width: 7mm; padding: 0.3mm 1.6mm; border: 0.3mm solid #E06029; border-radius: 1mm;
+         color: #C05223; font-weight: 700; font-size: 8pt; text-align: center; }
+  .pages { margin-left: 1.5mm; color: #525252; font-size: 8pt; }
+  .insurances td:first-child { width: 40mm; }
+  .credentials td:first-child { width: 52mm; }
+  .attachments td:first-child { width: 14mm; }
 </style>
 </head>
 <body>
@@ -150,10 +167,11 @@
   <div class="contents">
     <h3>Contents</h3>
     <ol>
-      <li><span class="c-title">Claim breakdown</span><span class="c-blurb">Schedule of values that progress claims are assembled against</span></li><li><span class="c-title">Project team</span><span class="c-blurb">Who to contact, and for what</span></li>
+      <li><span class="c-title">Claim breakdown</span><span class="c-blurb">Schedule of values that progress claims are assembled against</span></li><li><span class="c-title">Project team</span><span class="c-blurb">Who to contact, and for what</span></li><li><span class="c-title">Tickets and inductions</span><span class="c-blurb">Licences, tickets and inductions held by the site team</span></li><li><span class="c-title">Insurances</span><span class="c-blurb">Policies held and certificates of currency</span></li><li><span class="c-title">Safety and compliance documents</span><span class="c-blurb">SWMS, plans and licences</span></li><li><span class="c-title">Attachments</span><span class="c-blurb">5 documents bound into this pack</span></li>
     </ol>
   </div>
 </section>
+
 
 <section class="page">
   
@@ -164,6 +182,7 @@
       </div>
       <div class="page-head-logo"><div class="wordmark">Ember Demolition</div></div>
     </header>
+  
   <p class="lede">The schedule of values progress claims on this project will be assembled against. Claims should reference the item numbers below. Amounts exclude GST.</p>
   <table class="grid claim">
     <thead>
@@ -243,7 +262,6 @@
       <tr><td></td><td>Total</td><td class="num">$1,287,000.00</td><td class="num pct">102.1%</td></tr>
     </tfoot>
   </table>
-
   
   <div class="recon">
     <div><div class="k">Contract sum recorded</div><div class="v">$1,260,000.00</div></div>
@@ -258,7 +276,6 @@
          <p>To be confirmed before the first progress claim: whether the contract sum is inclusive of provisional sums, and whether the credit has already been taken.</p>
     </div>
 </section>
-
 <section class="page">
   
     <header class="page-head">
@@ -268,6 +285,7 @@
       </div>
       <div class="page-head-logo"><div class="wordmark">Ember Demolition</div></div>
     </header>
+  
   <p class="lede">Project contacts for Collins St facade demolition.</p>
   <table class="grid team">
     <thead>
@@ -304,6 +322,253 @@
             <td class="nowrap"><span class="nil">—</span></td>
             <td><a href="mailto:dean.kovac@demo-seed.subsync.com.au"><span class="nowrap">dean.kovac@</span><wbr><span class="nowrap">demo-seed.subsync.com.au</span></a></td>
           </tr>
+    </tbody>
+  </table>
+</section>
+<section class="page">
+  
+    <header class="page-head">
+      <div>
+        <div class="eyebrow">Section 3</div>
+        <h2>Tickets and inductions</h2>
+      </div>
+      <div class="page-head-logo"><div class="wordmark">Ember Demolition</div></div>
+    </header>
+  
+  <p class="lede">Licences, tickets and inductions held by the people working on site, from the credentials register. Status is as at 14 October 2026.</p>
+  <table class="grid credentials">
+    <thead>
+      <tr><th>Ticket or induction</th><th>Number</th><th>Issued by</th><th>Expiry</th><th>Copy</th></tr>
+    </thead>
+    
+    <tbody class="section">
+      <tr class="section-row"><td colspan="5">Dean Kovac<span class="row-sub">Site Manager</span></td></tr>
+      
+      <tr>
+        <td>Construction induction (white card)</td>
+        <td class="nowrap">CIC-0000001</td>
+        <td>WorkSafe Victoria</td>
+        <td><span class="chip none">No expiry</span></td>
+        <td class="nowrap"><span class="muted">Not attached</span></td>
+      </tr>
+      <tr>
+        <td>High risk work licence — DG, RB, WP</td>
+        <td class="nowrap">HRW-0000000</td>
+        <td>WorkSafe Victoria</td>
+        <td><div class="nowrap">2 November 2026</div><span class="chip warn">Expires in 19 days</span></td>
+        <td class="nowrap"><span class="att">Att. A</span><span class="pages">p. 8</span></td>
+      </tr>
+      <tr>
+        <td>First aid (HLTAID011)</td>
+        <td class="nowrap">FA-24-0000</td>
+        <td>St John Ambulance Victoria</td>
+        <td><div class="nowrap">15 August 2027</div><span class="chip ok">Current</span></td>
+        <td class="nowrap"><span class="muted">Not attached</span></td>
+      </tr>
+    </tbody>
+    <tbody class="section">
+      <tr class="section-row"><td colspan="5">Tom Whelan<span class="row-sub">Project Manager</span></td></tr>
+      
+      <tr>
+        <td>Construction induction (white card)</td>
+        <td class="nowrap">CIC-0000002</td>
+        <td>WorkSafe Victoria</td>
+        <td><span class="chip none">No expiry</span></td>
+        <td class="nowrap"><span class="muted">Not attached</span></td>
+      </tr>
+      <tr>
+        <td>Work safely at heights (RIIWHS204E)</td>
+        <td class="nowrap">WAH-23-0000</td>
+        <td>Registered training organisation</td>
+        <td><div class="nowrap">30 September 2026</div><span class="chip bad">Expired</span></td>
+        <td class="nowrap"><span class="muted">Not attached</span></td>
+      </tr>
+    </tbody>
+    <tbody class="section">
+      <tr class="section-row"><td colspan="5">Grace Okonkwo<span class="row-sub">Project Manager</span></td></tr>
+      
+      <tr>
+        <td>Construction induction (white card)</td>
+        <td class="nowrap">CIC-0000003</td>
+        <td>WorkSafe Victoria</td>
+        <td><span class="chip none">No expiry</span></td>
+        <td class="nowrap"><span class="muted">Not attached</span></td>
+      </tr>
+      <tr>
+        <td>Site induction — 480 Collins Street</td>
+        <td class="nowrap"><span class="nil">—</span></td>
+        <td>Meridian Built</td>
+        <td><div class="nowrap">14 October 2027</div><span class="chip ok">Current</span></td>
+        <td class="nowrap"><span class="muted">Not attached</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+<section class="page">
+  
+    <header class="page-head">
+      <div>
+        <div class="eyebrow">Section 4</div>
+        <h2>Insurances</h2>
+      </div>
+      <div class="page-head-logo"><div class="wordmark">Ember Demolition</div></div>
+    </header>
+  
+  <p class="lede">Policies held by Ember Demolition Pty Ltd. Status is as at 14 October 2026. Certificates of currency are bound in where marked.</p>
+  <table class="grid insurances">
+    <thead>
+      <tr><th>Cover</th><th>Insurer</th><th>Policy no.</th><th class="num">Limit</th><th>Expiry</th><th>Certificate</th></tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        <td class="strong">Contract Works and Mobile Plant</td>
+        <td>QBE Insurance</td>
+        <td class="nowrap">CW-SAMPLE-01</td>
+        <td class="num">$2,000,000</td>
+        <td><div class="nowrap">28 February 2027</div><span class="chip ok">Current</span></td>
+        <td class="nowrap"><span class="muted">Not attached</span></td>
+      </tr>
+      <tr>
+        <td class="strong">Motor Vehicle Fleet</td>
+        <td>Allianz Australia</td>
+        <td class="nowrap">MV-SAMPLE-02</td>
+        <td class="num"><span class="nil">—</span></td>
+        <td><div class="nowrap">31 May 2027</div><span class="chip ok">Current</span></td>
+        <td class="nowrap"><span class="muted">Not attached</span></td>
+      </tr>
+      <tr>
+        <td class="strong">Professional Indemnity</td>
+        <td>Chubb Insurance</td>
+        <td class="nowrap">PI-SAMPLE-03</td>
+        <td class="num">$5,000,000</td>
+        <td><div class="nowrap">30 April 2027</div><span class="chip ok">Current</span></td>
+        <td class="nowrap"><span class="muted">Not attached</span></td>
+      </tr>
+      <tr>
+        <td class="strong">Public and Products Liability</td>
+        <td>CGU Insurance</td>
+        <td class="nowrap">PL-SAMPLE-04</td>
+        <td class="num">$20,000,000</td>
+        <td><div class="nowrap">31 March 2027</div><span class="chip ok">Current</span></td>
+        <td class="nowrap"><span class="att">Att. B</span><span class="pages">p. 9</span></td>
+      </tr>
+      <tr>
+        <td class="strong">WorkCover (Victoria)</td>
+        <td>WorkSafe Victoria</td>
+        <td class="nowrap">WC-SAMPLE-05</td>
+        <td class="num"><span class="nil">—</span></td>
+        <td><div class="nowrap">30 June 2027</div><span class="chip ok">Current</span></td>
+        <td class="nowrap"><span class="muted">Not attached</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+<section class="page">
+  
+    <header class="page-head">
+      <div>
+        <div class="eyebrow">Section 5</div>
+        <h2>Safety and compliance documents</h2>
+      </div>
+      <div class="page-head-logo"><div class="wordmark">Ember Demolition</div></div>
+    </header>
+  
+  <p class="lede">The standard documents that apply to this work. Each attached document is bound in after the pack exactly as issued, with its attachment letter and the pack page number added in the margin.</p>
+  <table class="grid documents">
+    <thead>
+      <tr><th>Document</th><th>Ref.</th><th>Rev.</th><th>Date</th><th>Attached</th></tr>
+    </thead>
+    
+    <tbody class="section">
+      <tr class="section-row"><td colspan="5">Safe work method statements</td></tr>
+      
+      <tr>
+        <td><div class="strong">Facade panel removal, levels 1–8</div><div class="sub">High risk construction work: Work at heights over 2 m; Work near a public road; Demolition of load-bearing elements</div></td>
+        <td class="nowrap">SWMS-01</td>
+        <td>B</td>
+        <td class="nowrap">6 October 2026</td>
+        <td class="nowrap"><span class="att">Att. C</span><span class="pages">p. 10</span></td>
+      </tr>
+      <tr>
+        <td><div class="strong">Structural take-down, podium</div><div class="sub">High risk construction work: Demolition of load-bearing elements; Work involving powered mobile plant</div></td>
+        <td class="nowrap">SWMS-02</td>
+        <td>A</td>
+        <td class="nowrap">6 October 2026</td>
+        <td class="nowrap"><span class="att">Att. D</span><span class="pages">p. 13</span></td>
+      </tr>
+    </tbody>
+    <tbody class="section">
+      <tr class="section-row"><td colspan="5">Plans</td></tr>
+      
+      <tr>
+        <td><div class="strong">Traffic management plan — Collins Street lane closure</div><div class="sub">Night works, lane 1 closed 7:00 pm–5:00 am</div></td>
+        <td class="nowrap">TMP-01</td>
+        <td>C</td>
+        <td class="nowrap">29 September 2026</td>
+        <td class="nowrap"><span class="att">Att. E</span><span class="pages">p. 14</span></td>
+      </tr>
+    </tbody>
+    <tbody class="section">
+      <tr class="section-row"><td colspan="5">Licences and permits</td></tr>
+      
+      <tr>
+        <td><div class="strong">Demolition and asbestos removal licence</div></td>
+        <td class="nowrap">Class A</td>
+        <td><span class="nil">—</span></td>
+        <td class="nowrap">1 July 2025</td>
+        <td class="nowrap"><span class="muted">Not attached</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+<section class="page">
+  
+    <header class="page-head">
+      <div>
+        <div class="eyebrow">Section 6</div>
+        <h2>Attachments</h2>
+      </div>
+      <div class="page-head-logo"><div class="wordmark">Ember Demolition</div></div>
+    </header>
+  
+  <p class="lede">Documents bound into this pack after this page. Page numbers run on from the pack, and each attached page carries its letter in the top margin.</p>
+  <table class="grid attachments">
+    <thead>
+      <tr><th>Att.</th><th>Document</th><th>Type</th><th class="num">Pages</th></tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        <td><span class="att">A</span></td>
+        <td>High risk work licence — DG, RB, WP — Dean Kovac</td>
+        <td>Ticket</td>
+        <td class="num">8</td>
+      </tr>
+      <tr>
+        <td><span class="att">B</span></td>
+        <td>Certificate of currency — Public and Products Liability</td>
+        <td>Insurance</td>
+        <td class="num">9</td>
+      </tr>
+      <tr>
+        <td><span class="att">C</span></td>
+        <td>SWMS-01 Facade panel removal, levels 1–8</td>
+        <td>SWMS</td>
+        <td class="num">10–12</td>
+      </tr>
+      <tr>
+        <td><span class="att">D</span></td>
+        <td>SWMS-02 Structural take-down, podium</td>
+        <td>SWMS</td>
+        <td class="num">13</td>
+      </tr>
+      <tr>
+        <td><span class="att">E</span></td>
+        <td>TMP-01 Traffic management plan — Collins Street lane closure</td>
+        <td>Plan</td>
+        <td class="num">14</td>
+      </tr>
     </tbody>
   </table>
 </section>

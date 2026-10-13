@@ -18,6 +18,7 @@ npm test                  # palette derivation against every stored colour pairi
 npm run build:samples     # writes samples/ from src/sample-data.mjs
 npm run preview           # email with the logo inlined, for opening in a browser
 npm run build:pack        # Pre-Commencement Pack PDF for each example brand
+npm run build:fixtures    # regenerate the fictional SWMS, plan, certificate and ticket it binds in
 BRAND=brand/acme.json npm run build:samples
 ```
 
@@ -176,6 +177,30 @@ Measured against the pack the app produced for Collins St facade demolition
   makes phone and email live links, shows `—` for missing details.
 - Document reference, revision, status and a long-form date on the cover;
   running footer with entity, project, reference and page x of y.
+
+**Everything the pack screen can include.** Each tick on the pack screen maps
+to a section, and a section only prints when it is ticked:
+
+| Pack screen | Section | What it shows |
+| --- | --- | --- |
+| Claim breakdown | Claim breakdown | numbered schedule, subtotals, reconciliation |
+| Project team | Project team | names, roles, phone, email |
+| Tickets & inductions | Tickets and inductions | per person: ticket, number, issuer, expiry and status, copy |
+| Your insurances | Insurances | cover, insurer, policy no., limit, expiry and status, certificate |
+| Your standard documents | Safety and compliance documents | grouped SWMS / plans / licences, ref, rev, date, high risk construction work categories for SWMS |
+| (any attached file) | Attachments | lettered index with page ranges |
+
+Expiry status is worked out from the pack date: *Expired* (red), *Expires in
+n days* inside 30 days (amber), *Current* (green), *No expiry*.
+
+**Attachments are bound in, not restyled.** A SWMS, plan or certificate of
+currency has to go out exactly as issued, so each one keeps its own layout,
+page size and orientation (A4 landscape SWMS and A3 plans included). Each
+page is scaled into a margin band carrying the attachment letter and title on
+top and the pack's footer and page number underneath, so pages run 1 to n
+across the whole pack and the index can give page ranges. Ticket photos (PNG
+or JPG) are placed at card size at the top of an A4 page. Anything listed
+without a file prints as *Not attached*.
 
 The payload contract is `samplePack` in `src/sample-data.mjs`. The one field
 the app does not obviously supply is `claimBreakdown[].kind`
