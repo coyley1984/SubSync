@@ -1,14 +1,14 @@
-# SubSync review outputs — Commercial Summary Schedule + departures email
+# SubSync review outputs — Commercial Summary Schedule, departures email, Pre-Commencement Pack
 
-Generators for the two things a subcontractor actually sends to a builder after
-a SubSync review:
+Generators for the documents a subcontractor sends to a builder out of SubSync:
 
 | Output | Generator | Sample |
 | --- | --- | --- |
 | Commercial Summary Schedule (`.xlsx`) | `src/commercial-summary.mjs` | `samples/Ridgeline Facades…Commercial Summary Schedule.xlsx` |
 | Drafted departures email (HTML + text + `.eml`) | `src/departures-email.mjs` | `samples/departures-email.eml` |
+| Pre-Commencement Pack (`.pdf`, A4) | `src/pre-commencement-pack.mjs` | `samples/pre-commencement/` (one per example brand) |
 
-Both take their colours from the account's **Settings → Company Details →
+All three take their colours from the account's **Settings → Company Details →
 Brand colours**, using the same rules the app applies to its own notices,
 orders and variations (see [Brand colours](#brand-colours)).
 
@@ -17,6 +17,8 @@ npm install
 npm test                  # palette derivation against every stored colour pairing
 npm run build:samples     # writes samples/ from src/sample-data.mjs
 npm run preview           # email with the logo inlined, for opening in a browser
+npm run build:pack        # Pre-Commencement Pack PDF for each example brand
+npm run build:fixtures    # regenerate the fictional SWMS, plan, certificate and ticket it binds in
 BRAND=brand/acme.json npm run build:samples
 ```
 
@@ -137,6 +139,73 @@ are from the real pair.
   card. Greys darkened to `#5A5A5A` (7:1 on white).
 - Plain-text alternative mirrors the letter item for item, with the same cut
   line.
+
+## Pre-Commencement Pack
+
+Measured against the pack the app produced for Collins St facade demolition
+(Meridian Built, 14/10/2026).
+
+**What was wrong**
+
+1. **The title and section headings were near-invisible.** They were set in a
+   pale brand colour on white, so they all but disappeared.
+2. **The schedule did not reconcile and the pack buried it.** Total
+   $1,287,000 against a recorded contract sum of $1,260,000, noted in grey
+   under the table. The $27,000 is the provisional sum ($45,000) less the
+   hoarding credit ($18,000); contract works alone agree with the sum.
+3. **No item numbers.** Claims had nothing to reference line by line.
+4. **Role printed twice** — "Project Manager — Project Manager",
+   "Contract Administrator — Contracts Administrator".
+5. **Emails wrapped mid-word** (`grace.okonkwo@demo-` / `seed…`).
+6. **Pages 2 and 3 had no masthead or document control**; the cover was a logo
+   and five lines; dates were `14/10/2026`.
+
+**What changed** — `samples/preview/pack-*.png`
+
+- Logo top right on the cover and every section page; entity name as a
+  wordmark when no logo is on file. Accent rule under the masthead.
+- Company Details colours applied by the same rules as the schedule: panel
+  colour on table header rows, tint on section rows, accent on rules. New
+  `accentInk` token: the accent darkened only when it carries text, so a pale
+  accent still reads.
+- Cover carries the figures that matter: contract sum, schedule total,
+  difference (amber when it does not reconcile, green when it does).
+- Claim breakdown numbered `1.1`, `1.2`…, with section subtotals, % of
+  contract sum, a total, a reconciliation strip and, when it does not
+  reconcile, a flag stating where the difference comes from.
+- Team table de-duplicates role/position, breaks emails only after the `@`,
+  makes phone and email live links, shows `—` for missing details.
+- Document reference, revision, status and a long-form date on the cover;
+  running footer with entity, project, reference and page x of y.
+
+**Everything the pack screen can include.** Each tick on the pack screen maps
+to a section, and a section only prints when it is ticked:
+
+| Pack screen | Section | What it shows |
+| --- | --- | --- |
+| Claim breakdown | Claim breakdown | numbered schedule, subtotals, reconciliation |
+| Project team | Project team | names, roles, phone, email |
+| Tickets & inductions | Tickets and inductions | per person: ticket, number, issuer, expiry and status, copy |
+| Your insurances | Insurances | cover, insurer, policy no., limit, expiry and status, certificate |
+| Your standard documents | Safety and compliance documents | grouped SWMS / plans / licences, ref, rev, date, high risk construction work categories for SWMS |
+| (any attached file) | Attachments | lettered index with page ranges |
+
+Expiry status is worked out from the pack date: *Expired* (red), *Expires in
+n days* inside 30 days (amber), *Current* (green), *No expiry*.
+
+**Attachments are bound in, not restyled.** A SWMS, plan or certificate of
+currency has to go out exactly as issued, so each one keeps its own layout,
+page size and orientation (A4 landscape SWMS and A3 plans included). Each
+page is scaled into a margin band carrying the attachment letter and title on
+top and the pack's footer and page number underneath, so pages run 1 to n
+across the whole pack and the index can give page ranges. Ticket photos (PNG
+or JPG) are placed at card size at the top of an A4 page. Anything listed
+without a file prints as *Not attached*.
+
+The payload contract is `samplePack` in `src/sample-data.mjs`. The one field
+the app does not obviously supply is `claimBreakdown[].kind`
+(`contract` / `provisional` / `adjustment`); without it the pack cannot say
+which lines explain a difference.
 
 ## Decisions worth challenging
 

@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8" />
+<title>Pre-Commencement Pack — Collins St facade demolition</title>
+<style>
+  @page { size: A4; margin: 16mm 16mm 18mm 16mm; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin: 0; font-family: Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 9.5pt; line-height: 1.45; color: #1A1A1A; background: #FFFFFF;
+         font-feature-settings: "tnum" 1, "cv11" 1; }
+  a { color: inherit; text-decoration: none; }
+  .page { break-after: page; }
+  .page:last-child { break-after: auto; }
+
+  /* Masthead */
+  .masthead { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 7mm;
+              border-bottom: 1.2mm solid #F686FE; }
+  .logo { display: block; height: 15mm; width: auto; }
+  .page-head .logo { height: 8mm; }
+  .wordmark { font-size: 16pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #1A1A1A; }
+  .page-head .wordmark { font-size: 11pt; }
+  .doc-control { text-align: right; font-size: 8pt; color: #525252; line-height: 1.6; padding-top: 1mm; }
+  .doc-control strong { color: #1A1A1A; font-weight: 600; }
+
+  .eyebrow { font-size: 7.5pt; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #A359A9; }
+  h1 { margin: 2mm 0 1.5mm; font-size: 26pt; line-height: 1.12; font-weight: 700; letter-spacing: -0.01em; color: #1A1A1A; }
+  h2 { margin: 1mm 0 0; font-size: 17pt; line-height: 1.2; font-weight: 700; color: #1A1A1A; }
+  .address { font-size: 11pt; color: #525252; }
+
+  /* Cover */
+  .cover-title { padding: 14mm 0 9mm; }
+  table.meta { border-collapse: collapse; width: 100%; background: #FDE0F1; border-left: 1.2mm solid #F686FE; }
+  table.meta th, table.meta td { text-align: left; vertical-align: top; padding: 2.4mm 5mm; border-bottom: 0.25mm solid #FFFFFF; }
+  table.meta th { width: 38mm; font-size: 7.5pt; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #525252; padding-top: 2.9mm; }
+  table.meta td { font-size: 10.5pt; }
+
+  .figures { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; margin-top: 9mm; }
+  .figure { border: 0.3mm solid #CFCFCF; border-top: 1mm solid #F686FE; padding: 4mm 4.5mm; }
+  .figure-label { font-size: 7.5pt; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #525252; }
+  .figure-value { margin-top: 1.5mm; font-size: 15pt; font-weight: 700; color: #1A1A1A; }
+  .figure-note { margin-top: 1.5mm; font-size: 8pt; color: #525252; line-height: 1.4; }
+  .figure.warn { border-top-color: #8A5A2B; background: #F7EFE3; }
+  .figure.warn .figure-value { color: #8A5A2B; }
+  .figure.ok { border-top-color: #2E6B4F; }
+  .figure.ok .figure-value { color: #2E6B4F; }
+
+  .contents { margin-top: 11mm; }
+  .contents h3 { margin: 0 0 2mm; font-size: 7.5pt; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #A359A9; }
+  .contents ol { list-style: none; margin: 0; padding: 0; counter-reset: c; }
+  .contents li { counter-increment: c; display: flex; gap: 5mm; align-items: baseline; padding: 3mm 0; border-bottom: 0.25mm solid #E3E3E3; }
+  .contents li::before { content: counter(c, decimal-leading-zero); font-weight: 700; color: #A359A9; width: 7mm; }
+  .contents .c-title { font-weight: 600; font-size: 10.5pt; }
+  .contents .c-blurb { color: #525252; margin-left: auto; font-size: 8.5pt; }
+
+  /* Section pages */
+  .page-head { display: flex; justify-content: space-between; align-items: flex-end; padding-bottom: 4mm; margin-bottom: 6mm;
+               border-bottom: 0.6mm solid #F686FE; }
+  .lede { margin: 0 0 5mm; color: #525252; font-size: 9.5pt; max-width: 150mm; }
+
+  table.grid { width: 100%; border-collapse: collapse; }
+  table.grid thead { display: table-header-group; }
+  table.grid th { background: #F21897; color: #1A1A1A; text-align: left; font-size: 7.5pt; font-weight: 700;
+                  letter-spacing: 0.08em; text-transform: uppercase; padding: 2.6mm 3mm; border-bottom: 0.4mm solid #BDBDBD; }
+  table.grid td { padding: 2.3mm 3mm; border-bottom: 0.25mm solid #E3E3E3; vertical-align: top; }
+  table.grid tr { break-inside: avoid; }
+  table.grid .num { text-align: right; white-space: nowrap; }
+  table.grid th.num { text-align: right; }
+  table.grid .ref { width: 11mm; color: #525252; font-size: 8.5pt; }
+  table.grid .pct { width: 17mm; color: #525252; font-size: 8.5pt; }
+  .section-row td { background: #FBBBE0; font-weight: 700; color: #1A1A1A; border-bottom: none; padding-top: 2.6mm; }
+  .section-row td.ref { color: #1A1A1A; }
+  .subtotal td { font-weight: 600; border-bottom: 0.3mm solid #CFCFCF; }
+  .subtotal td:nth-child(2) { color: #525252; font-weight: 500; }
+  tbody.section { break-inside: avoid; }
+  tfoot td { padding: 3.2mm 3mm; font-size: 11pt; font-weight: 700; border-top: 0.8mm solid #1A1A1A; border-bottom: none; }
+
+  .recon { margin-top: 5mm; display: grid; grid-template-columns: 1fr 1fr 1fr; border: 0.3mm solid #CFCFCF; }
+  .recon > div { padding: 3mm 4mm; border-right: 0.3mm solid #CFCFCF; }
+  .recon > div:last-child { border-right: none; }
+  .recon .k { font-size: 7.5pt; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #525252; }
+  .recon .v { margin-top: 1mm; font-size: 11pt; font-weight: 700; }
+  .recon .warn { background: #F7EFE3; }
+  .recon .warn .v { color: #8A5A2B; }
+  .recon .ok .v { color: #2E6B4F; }
+
+  .flag { margin-top: 5mm; padding: 4mm 5mm; background: #F7EFE3; border-left: 1.2mm solid #8A5A2B; break-inside: avoid; }
+  .flag-title { font-weight: 700; color: #8A5A2B; font-size: 10pt; margin-bottom: 1.5mm; }
+  .flag p { margin: 0 0 1.8mm; }
+  .flag p:last-child { margin-bottom: 0; }
+  .flag ul { margin: 0 0 1.8mm; padding-left: 5mm; }
+
+  .team .name { font-weight: 600; width: 36mm; }
+  .team td:nth-child(2) { width: 40mm; }
+  .team td:nth-child(3) { width: 27mm; }
+  .team .org { font-weight: 400; color: #525252; font-size: 8.5pt; }
+  .team td a { color: #A359A9; }
+  .nowrap { white-space: nowrap; }
+  .nil { color: #CFCFCF; }
+  .muted { color: #525252; font-size: 8.5pt; }
+  .strong { font-weight: 600; }
+  .sub { margin-top: 0.8mm; color: #525252; font-size: 8.5pt; }
+  .row-sub { font-weight: 400; color: #525252; margin-left: 3mm; }
+
+  .chip { display: inline-block; margin-top: 0.8mm; padding: 0.3mm 2mm; border-radius: 1mm; font-size: 7.5pt; font-weight: 600; white-space: nowrap; }
+  .chip.ok { color: #2E6B4F; background: #E7F1EC; }
+  .chip.warn { color: #8A5A2B; background: #F7EFE3; }
+  .chip.bad { color: #9B3535; background: #F6E9E9; }
+  .chip.none { color: #525252; background: #FAFAFA; }
+
+  .att { display: inline-block; min-width: 7mm; padding: 0.3mm 1.6mm; border: 0.3mm solid #F686FE; border-radius: 1mm;
+         color: #A359A9; font-weight: 700; font-size: 8pt; text-align: center; }
+  .pages { margin-left: 1.5mm; color: #525252; font-size: 8pt; }
+  .insurances td:first-child { width: 40mm; }
+  .credentials td:first-child { width: 52mm; }
+  .attachments td:first-child { width: 14mm; }
+</style>
+</head>
+<body>
+
+<section class="page cover">
+  <div class="masthead">
+    <div class="doc-control">
+      <strong>VTX-COLLINS-PCP-001 · Rev A</strong><br />Issued for commencement<br />14 October 2026
+    </div>
+    <div class="wordmark">Fuchsia Fitouts</div>
+  </div>
+
+  <div class="cover-title">
+    <div class="eyebrow">Pre-Commencement Pack</div>
+    <h1>Collins St facade demolition</h1>
+    <div class="address">480 Collins Street, Melbourne VIC 3000</div>
+  </div>
+
+  <table class="meta">
+    
+        <tr><th>Prepared for</th><td>Meridian Built Pty Ltd</td></tr>
+    
+        <tr><th>Prepared by</th><td>Fuchsia Fitouts Pty Ltd</td></tr>
+    
+        <tr><th>Date</th><td>14 October 2026</td></tr>
+    
+        <tr><th>Reference</th><td>VTX-COLLINS-PCP-001 · Rev A</td></tr>
+  </table>
+
+  <div class="figures">
+    
+      <div class="figure ">
+        <div class="figure-label">Contract sum</div>
+        <div class="figure-value">$1,260,000.00</div>
+        <div class="figure-note">Excluding GST</div>
+      </div>
+    
+      <div class="figure ">
+        <div class="figure-label">Schedule of values</div>
+        <div class="figure-value">$1,287,000.00</div>
+        <div class="figure-note">8 line items across 3 sections</div>
+      </div>
+    
+      <div class="figure warn">
+        <div class="figure-label">Difference</div>
+        <div class="figure-value">+$27,000.00</div>
+        <div class="figure-note">Contract works reconcile. The difference is provisional sums $45,000.00, adjustments −$18,000.00.</div>
+      </div>
+  </div>
+
+  <div class="contents">
+    <h3>Contents</h3>
+    <ol>
+      <li><span class="c-title">Claim breakdown</span><span class="c-blurb">Schedule of values that progress claims are assembled against</span></li><li><span class="c-title">Project team</span><span class="c-blurb">Who to contact, and for what</span></li><li><span class="c-title">Tickets and inductions</span><span class="c-blurb">Licences, tickets and inductions held by the site team</span></li><li><span class="c-title">Insurances</span><span class="c-blurb">Policies held and certificates of currency</span></li><li><span class="c-title">Safety and compliance documents</span><span class="c-blurb">SWMS, plans and licences</span></li><li><span class="c-title">Attachments</span><span class="c-blurb">5 documents bound into this pack</span></li>
+    </ol>
+  </div>
+</section>
+
+
+<section class="page">
+  
+    <header class="page-head">
+      <div>
+        <div class="eyebrow">Section 1</div>
+        <h2>Claim breakdown</h2>
+      </div>
+      <div class="page-head-logo"><div class="wordmark">Fuchsia Fitouts</div></div>
+    </header>
+  
+  <p class="lede">The schedule of values progress claims on this project will be assembled against. Claims should reference the item numbers below. Amounts exclude GST.</p>
+  <table class="grid claim">
+    <thead>
+      <tr><th>Item</th><th>Description</th><th class="num">Amount (ex GST)</th><th class="num">% of sum</th></tr>
+    </thead>
+    
+        <tbody class="section">
+          <tr class="section-row"><td class="ref">1</td><td colspan="3">Contract works</td></tr>
+          
+          <tr>
+            <td class="ref">1.1</td>
+            <td>Preliminaries and road occupancy</td>
+            <td class="num">$96,000.00</td>
+            <td class="num pct">7.6%</td>
+          </tr>
+          <tr>
+            <td class="ref">1.2</td>
+            <td>Scaffold, screens and public protection</td>
+            <td class="num">$178,000.00</td>
+            <td class="num pct">14.1%</td>
+          </tr>
+          <tr>
+            <td class="ref">1.3</td>
+            <td>Facade panel removal, levels 1–8</td>
+            <td class="num">$384,000.00</td>
+            <td class="num pct">30.5%</td>
+          </tr>
+          <tr>
+            <td class="ref">1.4</td>
+            <td>Structural take-down, podium</td>
+            <td class="num">$342,000.00</td>
+            <td class="num pct">27.1%</td>
+          </tr>
+          <tr>
+            <td class="ref">1.5</td>
+            <td>Spoil removal and disposal</td>
+            <td class="num">$156,000.00</td>
+            <td class="num pct">12.4%</td>
+          </tr>
+          <tr>
+            <td class="ref">1.6</td>
+            <td>Make good and handover</td>
+            <td class="num">$104,000.00</td>
+            <td class="num pct">8.3%</td>
+          </tr>
+          
+          <tr class="subtotal">
+            <td></td>
+            <td>Subtotal, contract works</td>
+            <td class="num">$1,260,000.00</td>
+            <td class="num pct">100.0%</td>
+          </tr>
+        </tbody>
+        <tbody class="section">
+          <tr class="section-row"><td class="ref">2</td><td colspan="3">Provisional sums</td></tr>
+          
+          <tr>
+            <td class="ref">2.1</td>
+            <td>Heritage stonework salvage</td>
+            <td class="num">$45,000.00</td>
+            <td class="num pct">3.6%</td>
+          </tr>
+          
+        </tbody>
+        <tbody class="section">
+          <tr class="section-row"><td class="ref">3</td><td colspan="3">Adjustments</td></tr>
+          
+          <tr>
+            <td class="ref">3.1</td>
+            <td>Credit — builder-supplied hoarding</td>
+            <td class="num">−$18,000.00</td>
+            <td class="num pct">-1.4%</td>
+          </tr>
+          
+        </tbody>
+    <tfoot>
+      <tr><td></td><td>Total</td><td class="num">$1,287,000.00</td><td class="num pct">102.1%</td></tr>
+    </tfoot>
+  </table>
+  
+  <div class="recon">
+    <div><div class="k">Contract sum recorded</div><div class="v">$1,260,000.00</div></div>
+    <div><div class="k">Schedule total</div><div class="v">$1,287,000.00</div></div>
+    <div class="warn"><div class="k">Difference</div><div class="v">+$27,000.00</div></div>
+  </div>
+  
+    <div class="flag">
+      <div class="flag-title">Schedule exceeds the contract sum by $27,000.00</div>
+      <p>Contract works total $1,260,000.00 and agree with the contract sum. The $27,000.00 difference is made up of the lines that sit outside it:</p>
+         <ul><li>Provisional sums: $45,000.00</li><li>Adjustments: −$18,000.00</li></ul>
+         <p>To be confirmed before the first progress claim: whether the contract sum is inclusive of provisional sums, and whether the credit has already been taken.</p>
+    </div>
+</section>
+<section class="page">
+  
+    <header class="page-head">
+      <div>
+        <div class="eyebrow">Section 2</div>
+        <h2>Project team</h2>
+      </div>
+      <div class="page-head-logo"><div class="wordmark">Fuchsia Fitouts</div></div>
+    </header>
+  
+  <p class="lede">Project contacts for Collins St facade demolition.</p>
+  <table class="grid team">
+    <thead>
+      <tr><th>Name</th><th>Role</th><th>Phone</th><th>Email</th></tr>
+    </thead>
+    <tbody>
+          <tr>
+            <td class="name">Grace Okonkwo</td>
+            <td>Project Manager</td>
+            <td class="nowrap"><span class="nil">—</span></td>
+            <td><a href="mailto:grace.okonkwo@demo-seed.subsync.com.au"><span class="nowrap">grace.okonkwo@</span><wbr><span class="nowrap">demo-seed.subsync.com.au</span></a></td>
+          </tr>
+          <tr>
+            <td class="name">Chris Coyle</td>
+            <td>Director</td>
+            <td class="nowrap"><a href="tel:0421841929">0421 841 929</a></td>
+            <td><a href="mailto:chris@vettex.com.au"><span class="nowrap">chris@</span><wbr><span class="nowrap">vettex.com.au</span></a></td>
+          </tr>
+          <tr>
+            <td class="name">Anita Rahman</td>
+            <td>Contract Administrator</td>
+            <td class="nowrap"><span class="nil">—</span></td>
+            <td><a href="mailto:anita.rahman@demo-seed.subsync.com.au"><span class="nowrap">anita.rahman@</span><wbr><span class="nowrap">demo-seed.subsync.com.au</span></a></td>
+          </tr>
+          <tr>
+            <td class="name">Tom Whelan</td>
+            <td>Project Manager</td>
+            <td class="nowrap"><span class="nil">—</span></td>
+            <td><a href="mailto:tom.whelan@demo-seed.subsync.com.au"><span class="nowrap">tom.whelan@</span><wbr><span class="nowrap">demo-seed.subsync.com.au</span></a></td>
+          </tr>
+          <tr>
+            <td class="name">Dean Kovac</td>
+            <td>Site Manager</td>
+            <td class="nowrap"><span class="nil">—</span></td>
+            <td><a href="mailto:dean.kovac@demo-seed.subsync.com.au"><span class="nowrap">dean.kovac@</span><wbr><span class="nowrap">demo-seed.subsync.com.au</span></a></td>
+          </tr>
+    </tbody>
+  </table>
+</section>
+<section class="page">
+  
+    <header class="page-head">
+      <div>
+        <div class="eyebrow">Section 3</div>
+        <h2>Tickets and inductions</h2>
+      </div>
+      <div class="page-head-logo"><div class="wordmark">Fuchsia Fitouts</div></div>
+    </header>
+  
+  <p class="lede">Licences, tickets and inductions held by the people working on site, from the credentials register. Status is as at 14 October 2026.</p>
+  <table class="grid credentials">
+    <thead>
+      <tr><th>Ticket or induction</th><th>Number</th><th>Issued by</th><th>Expiry</th><th>Copy</th></tr>
+    </thead>
+    
+    <tbody class="section">
+      <tr class="section-row"><td colspan="5">Dean Kovac<span class="row-sub">Site Manager</span></td></tr>
+      
+      <tr>
+        <td>Construction induction (white card)</td>
+        <td class="nowrap">CIC-0000001</td>
+        <td>WorkSafe Victoria</td>
+        <td><span class="chip none">No expiry</span></td>
+        <td class="nowrap"><span class="muted">Not attached</span></td>
+      </tr>
+      <tr>
+        <td>High risk work licence — DG, RB, WP</td>
+        <td class="nowrap">HRW-0000000</td>
+        <td>WorkSafe Victoria</td>
+        <td><div class="nowrap">2 November 2026</div><span class="chip warn">Expires in 19 days</span></td>
+        <td class="nowrap"><span class="att">Att. A</span><span class="pages">p. 8</span></td>
+      </tr>
+      <tr>
+        <td>First aid (HLTAID011)</td>
+        <td class="nowrap">FA-24-0000</td>
+        <td>St John Ambulance Victoria</td>
+        <td><div class="nowrap">15 August 2027</div><span class="chip ok">Current</span></td>
+        <td class="nowrap"><span class="muted">Not attached</span></td>
+      </tr>
+    </tbody>
+    <tbody class="section">
+      <tr class="section-row"><td colspan="5">Tom Whelan<span class="row-sub">Project Manager</span></td></tr>
+      
+      <tr>
+        <td>Construction induction (white card)</td>
+        <td class="nowrap">CIC-0000002</td>
+        <td>WorkSafe Victoria</td>
+        <td><span class="chip none">No expiry</span></td>
+        <td class="nowrap"><span class="muted">Not attached</span></td>
+      </tr>
+      <tr>
+        <td>Work safely at heights (RIIWHS204E)</td>
+        <td class="nowrap">WAH-23-0000</td>
+        <td>Registered training organisation</td>
+        <td><div class="nowrap">30 September 2026</div><span class="chip bad">Expired</span></td>
+        <td class="nowrap"><span class="muted">Not attached</span></td>
+      </tr>
+    </tbody>
+    <tbody class="section">
+      <tr class="section-row"><td colspan="5">Grace Okonkwo<span class="row-sub">Project Manager</span></td></tr>
+      
+      <tr>
+        <td>Construction induction (white card)</td>
+        <td class="nowrap">CIC-0000003</td>
+        <td>WorkSafe Victoria</td>
+        <td><span class="chip none">No expiry</span></td>
+        <td class="nowrap"><span class="muted">Not attached</span></td>
+      </tr>
+      <tr>
+        <td>Site induction — 480 Collins Street</td>
+        <td class="nowrap"><span class="nil">—</span></td>
+        <td>Meridian Built</td>
+        <td><div class="nowrap">14 October 2027</div><span class="chip ok">Current</span></td>
+        <td class="nowrap"><span class="muted">Not attached</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+<section class="page">
+  
+    <header class="page-head">
+      <div>
+        <div class="eyebrow">Section 4</div>
+        <h2>Insurances</h2>
+      </div>
+      <div class="page-head-logo"><div class="wordmark">Fuchsia Fitouts</div></div>
+    </header>
+  
+  <p class="lede">Policies held by Fuchsia Fitouts Pty Ltd. Status is as at 14 October 2026. Certificates of currency are bound in where marked.</p>
+  <table class="grid insurances">
+    <thead>
+      <tr><th>Cover</th><th>Insurer</th><th>Policy no.</th><th class="num">Limit</th><th>Expiry</th><th>Certificate</th></tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        <td class="strong">Contract Works and Mobile Plant</td>
+        <td>QBE Insurance</td>
+        <td class="nowrap">CW-SAMPLE-01</td>
+        <td class="num">$2,000,000</td>
+        <td><div class="nowrap">28 February 2027</div><span class="chip ok">Current</span></td>
+        <td class="nowrap"><span class="muted">Not attached</span></td>
+      </tr>
+      <tr>
+        <td class="strong">Motor Vehicle Fleet</td>
+        <td>Allianz Australia</td>
+        <td class="nowrap">MV-SAMPLE-02</td>
+        <td class="num"><span class="nil">—</span></td>
+        <td><div class="nowrap">31 May 2027</div><span class="chip ok">Current</span></td>
+        <td class="nowrap"><span class="muted">Not attached</span></td>
+      </tr>
+      <tr>
+        <td class="strong">Professional Indemnity</td>
+        <td>Chubb Insurance</td>
+        <td class="nowrap">PI-SAMPLE-03</td>
+        <td class="num">$5,000,000</td>
+        <td><div class="nowrap">30 April 2027</div><span class="chip ok">Current</span></td>
+        <td class="nowrap"><span class="muted">Not attached</span></td>
+      </tr>
+      <tr>
+        <td class="strong">Public and Products Liability</td>
+        <td>CGU Insurance</td>
+        <td class="nowrap">PL-SAMPLE-04</td>
+        <td class="num">$20,000,000</td>
+        <td><div class="nowrap">31 March 2027</div><span class="chip ok">Current</span></td>
+        <td class="nowrap"><span class="att">Att. B</span><span class="pages">p. 9</span></td>
+      </tr>
+      <tr>
+        <td class="strong">WorkCover (Victoria)</td>
+        <td>WorkSafe Victoria</td>
+        <td class="nowrap">WC-SAMPLE-05</td>
+        <td class="num"><span class="nil">—</span></td>
+        <td><div class="nowrap">30 June 2027</div><span class="chip ok">Current</span></td>
+        <td class="nowrap"><span class="muted">Not attached</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+<section class="page">
+  
+    <header class="page-head">
+      <div>
+        <div class="eyebrow">Section 5</div>
+        <h2>Safety and compliance documents</h2>
+      </div>
+      <div class="page-head-logo"><div class="wordmark">Fuchsia Fitouts</div></div>
+    </header>
+  
+  <p class="lede">The standard documents that apply to this work. Each attached document is bound in after the pack exactly as issued, with its attachment letter and the pack page number added in the margin.</p>
+  <table class="grid documents">
+    <thead>
+      <tr><th>Document</th><th>Ref.</th><th>Rev.</th><th>Date</th><th>Attached</th></tr>
+    </thead>
+    
+    <tbody class="section">
+      <tr class="section-row"><td colspan="5">Safe work method statements</td></tr>
+      
+      <tr>
+        <td><div class="strong">Facade panel removal, levels 1–8</div><div class="sub">High risk construction work: Work at heights over 2 m; Work near a public road; Demolition of load-bearing elements</div></td>
+        <td class="nowrap">SWMS-01</td>
+        <td>B</td>
+        <td class="nowrap">6 October 2026</td>
+        <td class="nowrap"><span class="att">Att. C</span><span class="pages">p. 10</span></td>
+      </tr>
+      <tr>
+        <td><div class="strong">Structural take-down, podium</div><div class="sub">High risk construction work: Demolition of load-bearing elements; Work involving powered mobile plant</div></td>
+        <td class="nowrap">SWMS-02</td>
+        <td>A</td>
+        <td class="nowrap">6 October 2026</td>
+        <td class="nowrap"><span class="att">Att. D</span><span class="pages">p. 13</span></td>
+      </tr>
+    </tbody>
+    <tbody class="section">
+      <tr class="section-row"><td colspan="5">Plans</td></tr>
+      
+      <tr>
+        <td><div class="strong">Traffic management plan — Collins Street lane closure</div><div class="sub">Night works, lane 1 closed 7:00 pm–5:00 am</div></td>
+        <td class="nowrap">TMP-01</td>
+        <td>C</td>
+        <td class="nowrap">29 September 2026</td>
+        <td class="nowrap"><span class="att">Att. E</span><span class="pages">p. 14</span></td>
+      </tr>
+    </tbody>
+    <tbody class="section">
+      <tr class="section-row"><td colspan="5">Licences and permits</td></tr>
+      
+      <tr>
+        <td><div class="strong">Demolition and asbestos removal licence</div></td>
+        <td class="nowrap">Class A</td>
+        <td><span class="nil">—</span></td>
+        <td class="nowrap">1 July 2025</td>
+        <td class="nowrap"><span class="muted">Not attached</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+<section class="page">
+  
+    <header class="page-head">
+      <div>
+        <div class="eyebrow">Section 6</div>
+        <h2>Attachments</h2>
+      </div>
+      <div class="page-head-logo"><div class="wordmark">Fuchsia Fitouts</div></div>
+    </header>
+  
+  <p class="lede">Documents bound into this pack after this page. Page numbers run on from the pack, and each attached page carries its letter in the top margin.</p>
+  <table class="grid attachments">
+    <thead>
+      <tr><th>Att.</th><th>Document</th><th>Type</th><th class="num">Pages</th></tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        <td><span class="att">A</span></td>
+        <td>High risk work licence — DG, RB, WP — Dean Kovac</td>
+        <td>Ticket</td>
+        <td class="num">8</td>
+      </tr>
+      <tr>
+        <td><span class="att">B</span></td>
+        <td>Certificate of currency — Public and Products Liability</td>
+        <td>Insurance</td>
+        <td class="num">9</td>
+      </tr>
+      <tr>
+        <td><span class="att">C</span></td>
+        <td>SWMS-01 Facade panel removal, levels 1–8</td>
+        <td>SWMS</td>
+        <td class="num">10–12</td>
+      </tr>
+      <tr>
+        <td><span class="att">D</span></td>
+        <td>SWMS-02 Structural take-down, podium</td>
+        <td>SWMS</td>
+        <td class="num">13</td>
+      </tr>
+      <tr>
+        <td><span class="att">E</span></td>
+        <td>TMP-01 Traffic management plan — Collins Street lane closure</td>
+        <td>Plan</td>
+        <td class="num">14</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+</body>
+</html>

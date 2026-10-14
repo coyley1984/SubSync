@@ -43,6 +43,7 @@ test('every stored pairing keeps body text, labels and builder zone legible', ()
     const p = brandFromOrganisation(org(pair)).palette;
     const label = `${pair.dark} / ${pair.light}`;
     assert.ok(contrast(p.inkOnWhite, 'FFFFFF') >= 4.5, `register values on paper: ${label}`);
+    assert.ok(contrast(p.accentInk, 'FFFFFF') >= 4.5, `accent as text on paper: ${label}`);
     assert.ok(contrast(p.muted, p.tint) >= 4.5, `label text on tint: ${label}`);
     assert.ok(contrast('FFFFFF', p.builderZone) >= 4.5, `white on builder zone: ${label}`);
     assert.ok(contrast(p.panel, p.builderZone) >= 1.3, `zones distinguishable: ${label} (${p.panel} vs ${p.builderZone})`);

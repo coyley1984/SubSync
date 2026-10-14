@@ -1,0 +1,8 @@
+{
+  "id": "fuchsia",
+  "name": "Fuchsia Fitouts Pty Ltd",
+  "shortName": "Fuchsia Fitouts",
+  "organisation": { "brand_dark": "#f21897", "brand_light": "#f686fe" },
+  "logo": { "print": null, "email": null, "alt": "Fuchsia Fitouts", "aspectRatio": null },
+  "contact": {}
+}

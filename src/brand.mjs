@@ -34,7 +34,7 @@ const STATUS = {
 };
 
 const REQUIRED_PALETTE_KEYS = [
-  'panel', 'onPanel', 'panelRule', 'accent', 'inkOnWhite', 'tint', 'tintSoft',
+  'panel', 'onPanel', 'panelRule', 'accent', 'accentInk', 'inkOnWhite', 'tint', 'tintSoft',
   'builderZone', 'builderZoneTint', 'ink', 'muted', 'rule', 'ruleSoft', 'paper',
   'band', 'inputField', ...Object.keys(STATUS),
 ];
@@ -64,6 +64,9 @@ export function derivePalette({ panel, accent } = {}) {
     onPanel: dark ? 'FFFFFF' : INK,
     panelRule: dark ? darken(pnl, 0.22) : 'BDBDBD',
     accent: acc,
+    // The accent as text on paper. A pale accent stays as-is for rules and
+    // bars, but is darkened until it reads when it carries words.
+    accentInk: ensureContrast(acc, 'FFFFFF', 4.5),
     inkOnWhite: dark ? pnl : INK,
     tint,
     tintSoft: lighten(tint, 0.55),
@@ -92,7 +95,7 @@ export function brandFromOrganisation(org, { id, logo, fonts, contact } = {}) {
     shortName: org?.name ?? '',
     palette: derivePalette({ panel: org?.brand_dark, accent: org?.brand_light }),
     logo: logo ?? { print: null, email: null, alt: org?.name ?? '', aspectRatio: null },
-    fonts: fonts ?? DEFAULT_FONTS,
+    fonts: { ...DEFAULT_FONTS, ...fonts },
     contact: contact ?? {},
   });
 }
@@ -101,6 +104,7 @@ const DEFAULT_FONTS = {
   spreadsheet: 'Calibri',
   spreadsheetFallback: 'Arial',
   email: "'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+  document: "Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
 };
 
 /**
@@ -115,9 +119,9 @@ export function loadBrand(idOrPath) {
 
   if (raw.organisation) {
     const palette = derivePalette({ panel: raw.organisation.brand_dark, accent: raw.organisation.brand_light });
-    return finalise({ ...raw, fonts: raw.fonts ?? DEFAULT_FONTS, palette });
+    return finalise({ ...raw, fonts: { ...DEFAULT_FONTS, ...raw.fonts }, palette });
   }
-  return finalise({ ...raw, fonts: raw.fonts ?? DEFAULT_FONTS });
+  return finalise({ ...raw, fonts: { ...DEFAULT_FONTS, ...raw.fonts } });
 }
 
 function finalise(brand) {
