@@ -15,6 +15,16 @@ const pct = (n, of) => (of ? `${((n / of) * 100).toFixed(1)}%` : '');
 
 const sum = (items) => items.reduce((t, i) => t + Number(i.amount), 0);
 
+const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
+
+/** "6 line items in 1 section", not "across 1 sections". */
+const scheduleCount = (rec) => {
+  const lines = rec.sections.reduce((n, s) => n + s.items.length, 0);
+  return rec.sections.length === 1
+    ? `${plural(lines, 'line item')} in 1 section`
+    : `${plural(lines, 'line item')} across ${plural(rec.sections.length, 'section')}`;
+};
+
 /**
  * Emails break only after the @, never mid-word, so a long address wraps as
  * `anita.rahman@` / `demo-seed.subsync.com.au` rather than `demo-` / `seed`.
@@ -485,7 +495,7 @@ export function buildPreCommencementHtml(pack, brand, { logoSrc = logoDataUri(br
 
   ${rec.sections.length ? `<div class="figures">
     ${rec.contractSum != null ? figure('Contract sum', money(rec.contractSum), esc(pack.commercial.gstTreatment ?? 'Excluding GST')) : ''}
-    ${figure('Schedule of values', money(rec.total), `${rec.sections.reduce((n, s) => n + s.items.length, 0)} line items across ${rec.sections.length} sections`)}
+    ${figure('Schedule of values', money(rec.total), scheduleCount(rec))}
     ${rec.variance == null ? '' : figure(
     rec.reconciles ? 'Reconciliation' : 'Difference',
     rec.reconciles ? 'Reconciles' : `${rec.variance > 0 ? '+' : '−'}${money(Math.abs(rec.variance))}`,
