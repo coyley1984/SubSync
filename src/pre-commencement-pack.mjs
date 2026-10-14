@@ -11,7 +11,7 @@ const money = (n) => {
   return `${n < 0 ? '−' : ''}$${abs}`;
 };
 
-const pct = (n, of) => (of ? `${((n / of) * 100).toFixed(1)}%` : '');
+const pct = (n, of) => (of ? `${n < 0 ? '−' : ''}${Math.abs((n / of) * 100).toFixed(1)}%` : '');
 
 const sum = (items) => items.reduce((t, i) => t + Number(i.amount), 0);
 

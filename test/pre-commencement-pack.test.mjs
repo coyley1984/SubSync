@@ -88,3 +88,10 @@ test('the cover counts line items and sections in plain English', () => {
   const single = { ...samplePack, claimBreakdown: [{ title: 'Contract works', kind: 'contract', items: [{ description: 'Lump sum', amount: 1260000 }] }] };
   assert.ok(buildPreCommencementHtml(single, loadBrand('subsync'), { logoSrc: null }).includes('1 line item in 1 section'));
 });
+
+test('a credit prints the same minus sign in the amount and the percentage', () => {
+  const html = buildPreCommencementHtml(samplePack, loadBrand('subsync'), { logoSrc: null });
+  assert.ok(html.includes('−$18,000.00'));
+  assert.ok(html.includes('−1.4%'));
+  assert.ok(!html.includes('-1.4%'));
+});
