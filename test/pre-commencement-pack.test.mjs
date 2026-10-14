@@ -80,3 +80,11 @@ test('the bound pack numbers attachments straight on from the pack pages', { tim
   for (let i = 1; i < attachments.length; i += 1) assert.equal(attachments[i].start, attachments[i - 1].end + 1);
   assert.equal(attachments.at(-1).end, pages);
 });
+
+test('the cover counts line items and sections in plain English', () => {
+  const one = { ...samplePack, claimBreakdown: samplePack.claimBreakdown.filter((s) => s.kind === 'contract') };
+  assert.ok(buildPreCommencementHtml(one, loadBrand('subsync'), { logoSrc: null }).includes('6 line items in 1 section'));
+  assert.ok(buildPreCommencementHtml(samplePack, loadBrand('subsync'), { logoSrc: null }).includes('8 line items across 3 sections'));
+  const single = { ...samplePack, claimBreakdown: [{ title: 'Contract works', kind: 'contract', items: [{ description: 'Lump sum', amount: 1260000 }] }] };
+  assert.ok(buildPreCommencementHtml(single, loadBrand('subsync'), { logoSrc: null }).includes('1 line item in 1 section'));
+});
